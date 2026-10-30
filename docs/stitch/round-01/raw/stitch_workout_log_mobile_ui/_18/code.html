@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-surface": "#111e17", "on-primary-container": "#a3fdc8", "on-primary-fixed": "#002111", "background": "#edfef0", "primary": "#005e3a", "surface-container-lowest": "#ffffff", "surface-container": "#e1f2e5", "on-secondary-fixed-variant": "#3f4944", "primary-container": "#18784e", "inverse-on-surface": "#e4f5e8", "secondary-fixed": "#dae5de", "surface-container-low": "#e7f8eb", "on-error": "#ffffff", "on-tertiary-fixed": "#2f1500", "secondary": "#56615b", "primary-fixed": "#9cf5c1", "on-tertiary": "#ffffff", "error": "#ba1a1a", "on-secondary": "#ffffff", "on-surface-variant": "#3f4942", "tertiary-container": "#a15600", "on-primary": "#ffffff", "secondary-container": "#dae5de", "inverse-primary": "#80d8a6", "surface-container-high": "#dcecdf", "surface-tint": "#006d44", "surface-bright": "#edfef0", "outline-variant": "#bec9bf", "tertiary": "#7d4200", "on-tertiary-container": "#ffe6d5", "outline": "#6f7a71", "on-secondary-fixed": "#141e1a", "on-background": "#111e17", "primary-fixed-dim": "#80d8a6", "surface": "#edfef0", "on-tertiary-fixed-variant": "#6e3900", "surface-variant": "#d6e7da", "error-container": "#ffdad6", "inverse-surface": "#25342b", "on-error-container": "#93000a", "tertiary-fixed": "#ffdcc3", "on-secondary-container": "#5c6761", "surface-dim": "#cdded2", "surface-container-highest": "#d6e7da", "secondary-fixed-dim": "#bec9c3", "on-primary-fixed-variant": "#005232", "tertiary-fixed-dim": "#ffb77d" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xl": "1.25rem", "space-sm": "0.5rem", "space-lg": "1rem", "margin": "1rem", "space-md": "0.75rem", "gutter": "0.75rem", "space-xs": "0.25rem" }, fontFamily: { "label-sm": ["Plus Jakarta Sans"], "data-unit": ["Plus Jakarta Sans"], "data-display-md": ["Space Grotesk"], "body-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "data-display-lg": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "headline-sm": ["Space Grotesk"], "label-md": ["Plus Jakarta Sans"] }, fontSize: { "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "data-unit": ["13px", { "lineHeight": "16px", "fontWeight": "500" }], "data-display-md": ["20px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "data-display-lg": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#edfef0;color:#111e17;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-xs"><button aria-label="退出训练并存草稿" class="min-h-[44px] min-w-[44px] -ml-space-xs px-space-xs flex items-center gap-0.5 text-on-surface-variant hover:text-on-surface active:scale-[0.98] transition-transform" onclick="history.back()"><span class="material-symbols-outlined text-[20px] text-on-surface-variant">arrow_back_ios_new</span><span class="font-label-md text-label-md text-on-surface-variant font-medium">退出 (存草稿)</span></button><div class="flex flex-col items-center justify-center flex-1 min-w-0 px-space-xs"><h1 class="font-title-md text-title-md text-on-surface truncate text-center leading-tight tracking-tight">Active Session</h1><div class="flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[13px] text-primary-container">timer</span><span class="font-headline-sm text-headline-sm text-primary-container tracking-tight leading-none">00:36:12</span></div></div><div class="flex items-center justify-end min-h-[44px] min-w-[44px] gap-1.5 pl-space-xs"><div class="flex items-center gap-1.5 py-1 px-2 rounded-full bg-surface-container"><span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span></span><span class="font-label-sm text-label-sm text-on-surface-variant whitespace-nowrap hidden sm:inline">已自动保存</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-0.5"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Top Swap Notification Banner -->
+<div class="px-margin pt-space-sm pb-space-xs">
+<div class="bg-surface-container-low rounded-xl p-space-md flex items-start gap-space-sm shadow-sm">
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px] text-primary">published_with_changes</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-space-xs">
+<p class="font-body-md text-body-md text-on-surface font-semibold tracking-tight">已换为坐姿绳索下拉 (宽握)</p>
+<button class="font-label-sm text-label-sm text-primary font-bold hover:underline shrink-0" type="button">撤回换算</button>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-0.5 leading-relaxed">
+          原「高位下拉」负荷按双滑轮 0.87 折算，并已为您在做工组前置插入 <span class="text-tertiary font-semibold">1 组试举寻轨</span>
+</p>
+</div>
+</div>
+</div>
+<!-- Primary Exercise Card -->
+<div class="px-margin mt-space-sm">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm">
+<!-- Exercise Header -->
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-bold">动作 1 / 4</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high font-label-sm text-label-sm text-primary font-semibold">背阔肌 / 上背</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight mt-1.5 truncate">
+            坐姿绳索下拉 (宽握)
+          </h2>
+<p class="font-label-sm text-label-sm text-secondary truncate mt-0.5">Seated Cable Lat Pulldown</p>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<button aria-label="替换动作" class="w-9 h-9 rounded-lg bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+<button aria-label="动作备注" class="w-9 h-9 rounded-lg bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface-variant transition-colors" type="button">
+<span class="material-symbols-outlined text-[19px]">edit_note</span>
+</button>
+</div>
+</div>
+<!-- Conversion Reference Capsule -->
+<div class="mt-space-md p-space-sm rounded-lg bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary">auto_fix_high</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold truncate">原动作 37.5kg × 10 ➔ 建议做工 32.5kg</span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-primary/10 font-label-sm text-label-sm text-primary font-bold shrink-0">RPE 8.0</span>
+</div>
+<p class="font-label-sm text-label-sm text-secondary pl-5">双滑轮阻尼比按 2:1 修正，建议先以低负荷试举适应配重行程</p>
+</div>
+<!-- Set Table Header -->
+<div class="grid grid-cols-12 gap-1 items-center px-1 pt-space-lg pb-space-xs font-label-sm text-label-sm text-secondary">
+<span class="col-span-3 text-left">组别 / 属性</span>
+<span class="col-span-3 text-center">负荷 (kg)</span>
+<span class="col-span-3 text-center">次数</span>
+<span class="col-span-3 text-right pr-2">状态 / 操作</span>
+</div>
+<!-- Sets Stack -->
+<div class="flex flex-col gap-space-xs mt-1">
+<!-- Set 1 (Archived) -->
+<div class="grid grid-cols-12 gap-1 items-center p-space-sm rounded-lg bg-surface-container-low/60 text-secondary">
+<div class="col-span-3 flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-semibold text-secondary">1</span>
+<span class="font-label-sm text-label-sm text-outline">原高位</span>
+</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md font-semibold text-on-surface-variant">35.0</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md font-semibold text-on-surface-variant">12</div>
+<div class="col-span-3 flex justify-end items-center pr-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[14px] text-primary">check</span>已归档
+            </span>
+</div>
+</div>
+<!-- Set 2 (Archived) -->
+<div class="grid grid-cols-12 gap-1 items-center p-space-sm rounded-lg bg-surface-container-low/60 text-secondary">
+<div class="col-span-3 flex items-center gap-1">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-semibold text-secondary">2</span>
+<span class="font-label-sm text-label-sm text-outline">原高位</span>
+</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md font-semibold text-on-surface-variant">37.5</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md font-semibold text-on-surface-variant">10</div>
+<div class="col-span-3 flex justify-end items-center pr-1">
+<span class="inline-flex items-center gap-0.5 px-2 py-1 rounded bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium">
+<span class="material-symbols-outlined text-[14px] text-primary">check</span>已归档
+            </span>
+</div>
+</div>
+<!-- HIGHLIGHT: Warm-up Set (W) -->
+<div class="relative rounded-xl p-space-md bg-surface-container-low shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>热身 W
+              </span>
+<span class="font-body-md text-body-md font-bold text-on-surface">试举组 (校准手感)</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold">50% 负荷 · 寻轨</span>
+</div>
+<div class="grid grid-cols-12 gap-2 items-center">
+<!-- Weight Stepper -->
+<div class="col-span-5 bg-surface-container-lowest rounded-lg p-1.5 flex items-center justify-between shadow-xs">
+<button aria-label="减重" class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-data-display-md text-data-display-md font-bold text-on-surface">15.0</span>
+<span class="font-label-sm text-label-sm text-secondary -mt-1">kg</span>
+</div>
+<button aria-label="加重" class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-on-surface active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+<!-- Reps Display / Tweak -->
+<div class="col-span-3 bg-surface-container-lowest rounded-lg p-1.5 flex flex-col items-center justify-center shadow-xs h-[48px]">
+<span class="font-data-display-md text-data-display-md font-bold text-on-surface">6</span>
+<span class="font-label-sm text-label-sm text-secondary -mt-1">次</span>
+</div>
+<!-- Start Action Button -->
+<div class="col-span-4">
+<button class="w-full h-[48px] rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-md text-body-md font-bold flex items-center justify-center gap-1 shadow-sm active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<span>开始</span>
+</button>
+</div>
+</div>
+<!-- Cue Microcopy -->
+<div class="flex items-center gap-1.5 text-on-surface-variant font-label-sm text-label-sm bg-surface-container/70 rounded-lg px-space-sm py-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">info</span>
+<span>建议放慢离心 3 秒，感受双滑轮收紧轨迹，不计入容量</span>
+</div>
+</div>
+<!-- Set 3 (Work Set 1 - Pending) -->
+<div class="grid grid-cols-12 gap-1 items-center p-space-sm rounded-lg bg-surface-container-lowest shadow-xs">
+<div class="col-span-3 flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-semibold text-on-surface">3</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">正式组</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-data-display-md text-data-display-md font-bold text-on-surface">32.5</span>
+<span class="font-label-sm text-label-sm text-secondary">kg</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-body-md text-body-md font-semibold text-on-surface">10-12</span>
+<span class="font-label-sm text-label-sm text-secondary">次</span>
+</div>
+<div class="col-span-3 flex justify-end items-center pr-1">
+<span class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-secondary font-medium">待开始</span>
+</div>
+</div>
+<!-- Set 4 (Work Set 2 - Pending) -->
+<div class="grid grid-cols-12 gap-1 items-center p-space-sm rounded-lg bg-surface-container-lowest shadow-xs">
+<div class="col-span-3 flex items-center gap-1.5">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-semibold text-on-surface">4</span>
+<span class="font-label-sm text-label-sm font-semibold text-on-surface">正式组</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-data-display-md text-data-display-md font-bold text-on-surface">32.5</span>
+<span class="font-label-sm text-label-sm text-secondary">kg</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-body-md text-body-md font-semibold text-on-surface">10-12</span>
+<span class="font-label-sm text-label-sm text-secondary">次</span>
+</div>
+<div class="col-span-3 flex justify-end items-center pr-1">
+<span class="px-2.5 py-1 rounded bg-surface-container font-label-sm text-label-sm text-secondary font-medium">待开始</span>
+</div>
+</div>
+</div>
+<!-- Set Quick Action Toolbar -->
+<div class="flex items-center gap-2 mt-space-md pt-space-xs">
+<button class="flex-1 h-9 rounded-lg bg-surface-container-low hover:bg-surface-container font-label-sm text-label-sm text-primary font-bold flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add</span>加一组
+        </button>
+<button class="flex-1 h-9 rounded-lg bg-surface-container-low hover:bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>同上组负荷
+        </button>
+<button class="h-9 px-3 rounded-lg bg-surface-container-low hover:bg-surface-container font-label-sm text-label-sm text-on-surface-variant font-medium flex items-center justify-center gap-1 transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">tune</span>类型
+        </button>
+</div>
+</div>
+</div>
+<!-- Subsequent Exercises Accordion / Preview -->
+<div class="px-margin mt-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">queue_play_next</span>
+<h3 class="font-title-md text-title-md font-bold text-on-surface">后续训练动作 (3)</h3>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">预计剩余 28 分钟</span>
+</div>
+<div class="flex flex-col gap-2 mt-space-xs">
+<!-- Next Exercise Item 1 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary shrink-0">2</span>
+<div class="min-w-0">
+<p class="font-body-md text-body-md font-semibold text-on-surface truncate">坐姿器械划船 (Seated Row)</p>
+<p class="font-label-sm text-label-sm text-secondary">预设 4 组 · 推荐 45.0 kg · 8-10 次</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline">drag_handle</span>
+</div>
+<!-- Next Exercise Item 2 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary shrink-0">3</span>
+<div class="min-w-0">
+<p class="font-body-md text-body-md font-semibold text-on-surface truncate">哑铃单臂划船</p>
+<p class="font-label-sm text-label-sm text-secondary">预设 3 组 · 推荐 18.0 kg · 每侧 10 次</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline">drag_handle</span>
+</div>
+<!-- Next Exercise Item 3 -->
+<div class="p-space-sm rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary shrink-0">4</span>
+<div class="min-w-0">
+<p class="font-body-md text-body-md font-semibold text-on-surface truncate">杠铃弯举 (EZ Bar Curl)</p>
+<p class="font-label-sm text-label-sm text-secondary">预设 3 组 · 推荐 25.0 kg · 12 次</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-[20px] text-outline">drag_handle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Fixed-Like Context Panel -->
+<div class="fixed bottom-0 inset-x-0 z-40 bg-surface-container-lowest shadow-[0_-4px_20px_rgba(17,30,23,0.08)] pb-safe">
+<!-- Progress Indicator Strip -->
+<div class="px-margin pt-space-sm pb-1 flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary">data_usage</span>
+<span>做工组进度：<strong class="text-on-surface">2 / 4 组</strong></span>
+</div>
+<span class="text-secondary text-[11px]">热身试举不累加有效容量</span>
+</div>
+<!-- Micro Progress Bar -->
+<div class="px-margin pb-space-sm">
+<div class="w-full h-1.5 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full transition-all duration-300" style="width: 50%;"></div>
+</div>
+</div>
+<!-- Bottom Actions Toolbar -->
+<div class="px-margin pb-space-sm flex items-center justify-between gap-space-sm">
+<button class="h-11 px-4 rounded-xl bg-surface-container-low hover:bg-surface-container font-label-md text-label-md font-semibold text-error flex items-center justify-center gap-1 active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+<span>放弃</span>
+</button>
+<button class="flex-1 h-11 rounded-xl bg-surface-container hover:bg-surface-container-high font-label-md text-label-md font-bold text-on-surface flex items-center justify-center gap-1.5 active:scale-[0.98] transition-transform" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary">check_circle</span>
+<span>提前结算本训练</span>
+</button>
+<button aria-label="更多操作" class="h-11 w-11 rounded-xl bg-surface-container hover:bg-surface-container-high font-label-md text-label-md font-semibold text-on-surface-variant flex items-center justify-center active:scale-95 transition-transform" type="button">
+<span class="material-symbols-outlined text-[20px]">more_horiz</span>
+</button>
+</div>
+</div>
+</div></main></body></html>

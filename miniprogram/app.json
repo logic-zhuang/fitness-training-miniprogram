@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/plans/index",
+    "pages/history/index",
+    "pages/profile/index",
+    "pages/plan-edit/index",
+    "pages/workout/index"
+    ,"pages/journal/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "训练手记",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f4f7f5",
+    "backgroundTextStyle": "dark"
+  },
+  "tabBar": {
+    "color": "#68766e",
+    "selectedColor": "#18784e",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/home/index", "text": "今天" },
+      { "pagePath": "pages/plans/index", "text": "计划" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json"
+}

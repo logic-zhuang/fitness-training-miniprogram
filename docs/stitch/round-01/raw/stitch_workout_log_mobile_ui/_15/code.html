@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_stack" name="shell-type"/>
+<title>训练进行中 - 记录</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#18784E",
+            "primary-container": "#18784E",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#a3fdc8",
+            "background": "#F4F6F5",
+            "surface": "#F4F6F5",
+            "surface-container": "#EBF0ED",
+            "surface-container-low": "#F0F4F2",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-high": "#E2E8E4",
+            "on-surface": "#17251D",
+            "on-surface-variant": "#4E5C54",
+            "outline": "#6f7a71",
+            "outline-variant": "#D0D9D3",
+            "secondary": "#56615B",
+            "error": "#BA1A1A"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "body": ["Plus Jakarta Sans", "system-ui", "sans-serif"],
+            "display": ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        min-height: 100%;
+        background-color: #F4F6F5;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      }
+      body {
+        overscroll-behavior-y: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+      .pt-safe { padding-top: env(safe-area-inset-top, 0px); }
+    }
+    ::-webkit-scrollbar { display: none; }
+    
+    @keyframes cursor-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .animate-blink {
+      animation: cursor-blink 1.06s infinite steps(1);
+    }
+  </style>
+</head>
+<body class="bg-[#F4F6F5] text-[#17251D] antialiased flex flex-col min-h-screen select-none">
+<!-- 1. 【顶部状态栏与导航栏】 -->
+<header class="fixed top-0 inset-x-0 z-40 bg-[#F4F6F5]/90 backdrop-blur-md pt-safe border-b border-[#D0D9D3]/40">
+<div class="h-14 px-3 flex items-center justify-between">
+<!-- 左侧：返回箭头与安全退出文字提示 (min-h: 44px) -->
+<button class="h-11 px-2 -ml-1 flex items-center gap-1 text-[#17251D] active:opacity-70 transition-opacity rounded-xl" onclick="history.back()">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+<span class="text-[13px] font-medium tracking-tight">退出 (存草稿)</span>
+</button>
+<!-- 中间：训练主题与动态计时器 -->
+<div class="flex flex-col items-center justify-center">
+<h1 class="text-[15px] font-bold text-[#17251D] leading-tight tracking-tight">背部 + 二头肌</h1>
+<div class="flex items-center gap-1 text-[11px] font-medium text-[#4E5C54] mt-0.5">
+<span class="text-[10px]">⏱</span>
+<span class="font-['Space_Grotesk'] tracking-wider" id="workoutTimer">00:34:21</span>
+</div>
+</div>
+<!-- 右侧：自动保存状态徽章 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-full bg-[#E0F2E9] border border-[#BCE3CF]/60 text-[11px] font-semibold text-[#18784E]">
+<span class="w-1.5 h-1.5 rounded-full bg-[#18784E] animate-pulse"></span>
+<span>已自动保存</span>
+</div>
+</div>
+</header>
+<!-- 主体滚动区域 (留出键盘与快捷操作的底部间距) -->
+<main class="flex-1 flex flex-col w-full max-w-[390px] mx-auto px-3.5 pt-16 pb-[390px] bg-[#F4F6F5]"><div class="flex flex-col w-full gap-3 pb-8">
+<!-- 1. 组间休息沉浸式卡片 (Hero Rest Card) -->
+<section class="w-full bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- 状态指示条 -->
+<div class="bg-primary-container text-on-primary px-space-md py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-on-primary-container animate-ping"></span>
+<span class="font-label-sm text-label-sm tracking-wide">组间恢复中 · 第 2 组已完成</span>
+</div>
+<button class="flex items-center gap-1 text-on-primary/90 font-label-sm text-label-sm min-h-[44px] px-1 active:opacity-75" id="vibrationToggle" onclick="toggleVibratePrompt()" type="button">
+<span class="material-symbols-outlined text-[16px]">vibration</span>
+<span id="vibrateLabel">震动提醒中</span>
+</button>
+</div>
+<!-- 计时核心与环形微进度区 -->
+<div class="p-space-lg flex flex-col items-center justify-center text-center">
+<div class="relative w-36 h-36 flex items-center justify-center my-1">
+<!-- SVG 环形进度条 (90s 倒计时视觉) -->
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 120 120">
+<circle class="text-surface-container" cx="60" cy="60" fill="transparent" r="52" stroke="currentColor" stroke-width="7"></circle>
+<circle class="text-primary-container transition-all duration-1000 ease-linear" cx="60" cy="60" fill="transparent" id="restProgressRing" r="52" stroke="currentColor" stroke-dasharray="326.7" stroke-dashoffset="75" stroke-linecap="round" stroke-width="7"></circle>
+</svg>
+<!-- 内部倒计时数字 -->
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">剩余休整</span>
+<span class="font-data-display-lg text-data-display-lg text-on-surface tracking-tight font-bold my-0.5" id="restCountdownText">01:14</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">air</span> 深吸慢呼
+          </span>
+</div>
+</div>
+<!-- 快捷增减与控制工具条 (44px 触控区标准) -->
+<div class="grid grid-cols-4 gap-2 w-full mt-2">
+<button class="min-h-[44px] py-2 px-1 bg-surface-container-low hover:bg-surface-container active:scale-[0.97] transition-all rounded-lg text-on-surface font-headline-sm text-headline-sm flex flex-col items-center justify-center" onclick="adjustRestTimer(-15)" type="button">
+<span class="font-data-display-md text-data-display-md leading-none text-on-surface-variant">-15<span class="font-data-unit text-data-unit">s</span></span>
+<span class="font-label-sm text-label-sm text-secondary leading-none mt-0.5">微调</span>
+</button>
+<button class="min-h-[44px] py-2 px-1 bg-surface-container-low hover:bg-surface-container active:scale-[0.97] transition-all rounded-lg text-on-surface font-headline-sm text-headline-sm flex flex-col items-center justify-center" onclick="adjustRestTimer(30)" type="button">
+<span class="font-data-display-md text-data-display-md leading-none text-primary">+30<span class="font-data-unit text-data-unit">s</span></span>
+<span class="font-label-sm text-label-sm text-secondary leading-none mt-0.5">延长</span>
+</button>
+<button class="min-h-[44px] py-2 px-1 bg-surface-container-low hover:bg-surface-container active:scale-[0.97] transition-all rounded-lg text-on-surface font-headline-sm text-headline-sm flex flex-col items-center justify-center" id="pauseResumeBtn" onclick="togglePauseResume()" type="button">
+<span class="material-symbols-outlined text-primary text-[20px] leading-none" id="pauseIcon">pause_circle</span>
+<span class="font-label-sm text-label-sm text-secondary leading-none mt-0.5" id="pauseLabel">暂停</span>
+</button>
+<button class="min-h-[44px] py-2 px-1 bg-primary text-on-primary hover:bg-primary-container active:scale-[0.97] transition-all rounded-lg flex flex-col items-center justify-center shadow-sm" onclick="skipRestNow()" type="button">
+<div class="flex items-center gap-0.5 leading-none">
+<span class="font-label-md text-label-md font-semibold text-on-primary">跳过</span>
+<span class="material-symbols-outlined text-[15px] text-on-primary">fast_forward</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-primary/80 leading-none mt-0.5">开练</span>
+</button>
+</div>
+<!-- 下一组提示胶囊 -->
+<div class="mt-3 w-full bg-surface-container-low rounded-lg p-2.5 flex items-center justify-between">
+<div class="flex items-center gap-2 min-w-0">
+<span class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">3</span>
+<div class="flex flex-col text-left truncate">
+<span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">准备开始下一组</span>
+<span class="font-body-md text-body-md font-semibold text-on-surface truncate">高位下拉 · 37.5 kg × 10-12 次</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-primary flex-shrink-0 pl-1">
+<span class="material-symbols-outlined text-[18px]">fitness_center</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. 当前动作追踪卡片 (Lat Pulldown Table) -->
+<section class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-2.5">
+<!-- 动作卡片头部 -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-bold">动作 1/4</span>
+<h2 class="font-title-md text-title-md text-on-surface font-bold tracking-tight">高位下拉 (宽握)</h2>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>历史最优 (03.12)：35 kg × 12 次 · 3 组</span>
+</div>
+</div>
+<div class="flex items-center gap-1 -mr-1">
+<button class="min-h-[44px] min-w-[44px] flex items-center justify-center text-secondary hover:text-on-surface active:opacity-70 rounded-lg" title="添加动作备注" type="button">
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+</button>
+<button class="min-h-[44px] min-w-[44px] flex items-center justify-center text-secondary hover:text-on-surface active:opacity-70 rounded-lg" title="替换动作" type="button">
+<span class="material-symbols-outlined text-[20px]">swap_horiz</span>
+</button>
+</div>
+</div>
+<!-- 训练组列表表格 -->
+<div class="w-full flex flex-col gap-1.5 mt-1">
+<!-- 表头 -->
+<div class="grid grid-cols-12 px-2 py-1 text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<div class="col-span-2 text-center">组数</div>
+<div class="col-span-3 text-center">重量 (kg)</div>
+<div class="col-span-3 text-center">次数 (reps)</div>
+<div class="col-span-4 text-center">状态</div>
+</div>
+<!-- 第 1 组：已完成 -->
+<div class="grid grid-cols-12 items-center bg-surface-container-low rounded-lg p-2 min-h-[48px]">
+<div class="col-span-2 flex items-center justify-center">
+<span class="font-data-display-md text-data-display-md text-secondary font-semibold">1</span>
+</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md text-on-surface font-semibold">
+          35.0
+        </div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md text-on-surface font-semibold">
+          12
+        </div>
+<div class="col-span-4 flex items-center justify-center">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+            已完成
+          </span>
+</div>
+</div>
+<!-- 第 2 组：刚刚完成 (高亮恢复色) -->
+<div class="grid grid-cols-12 items-center bg-surface-container rounded-lg p-2 min-h-[48px]">
+<div class="col-span-2 flex items-center justify-center">
+<span class="font-data-display-md text-data-display-md text-primary font-bold">2</span>
+</div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md text-primary font-bold">
+          37.5
+        </div>
+<div class="col-span-3 text-center font-data-display-md text-data-display-md text-primary font-bold">
+          10
+        </div>
+<div class="col-span-4 flex items-center justify-center">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm font-semibold shadow-xs">
+<span class="material-symbols-outlined text-[15px]">done_all</span>
+            刚刚完成
+          </span>
+</div>
+</div>
+<!-- 第 3 组：即将开始 (带呼吸提示与轻量焦点底色) -->
+<div class="grid grid-cols-12 items-center bg-surface-container-lowest rounded-lg p-2 min-h-[48px] shadow-sm">
+<div class="col-span-2 flex items-center justify-center">
+<span class="w-6 h-6 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center font-data-display-md text-data-display-md font-bold">3</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-data-display-md text-data-display-md text-on-surface font-bold">37.5</span>
+</div>
+<div class="col-span-3 text-center">
+<span class="font-data-display-md text-data-display-md text-on-surface font-bold">10-12</span>
+</div>
+<div class="col-span-4 flex items-center justify-center">
+<button class="min-h-[44px] px-2.5 py-1 rounded-lg bg-primary-fixed hover:bg-primary-fixed-dim text-on-primary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1 active:scale-[0.98] transition-transform" onclick="startNextSetDirectly()" type="button">
+<span>开始本组</span>
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 组操作快捷入口 -->
+<div class="flex items-center justify-between pt-1">
+<button class="min-h-[44px] px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface font-label-sm text-label-sm font-medium flex items-center gap-1 active:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">add</span>
+<span>添加一组</span>
+</button>
+<button class="min-h-[44px] px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm font-medium flex items-center gap-1 active:bg-surface-container" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span>同上组组数</span>
+</button>
+</div>
+</section>
+<!-- 3. 本次训练后续计划队列 (紧凑卡片一览) -->
+<section class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface font-bold">后续训练动作</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">剩余 3 项 · 10 组</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<!-- 动作 2 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary">2</span>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md font-semibold text-on-surface truncate">坐姿器械划船 (Seated Row)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">预设 4 组 · 推荐 45.0 kg</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0">chevron_right</span>
+</div>
+<!-- 动作 3 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary">3</span>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md font-semibold text-on-surface truncate">哑铃单臂划船</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">预设 3 组 · 推荐 18.0 kg</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0">chevron_right</span>
+</div>
+<!-- 动作 4 -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="w-5 h-5 rounded-full bg-surface-container flex items-center justify-center font-label-sm text-label-sm font-bold text-secondary">4</span>
+<div class="flex flex-col truncate">
+<span class="font-body-md text-body-md font-semibold text-on-surface truncate">杠铃弯举 (EZ Bar Curl)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">预设 3 组 · 推荐 25.0 kg</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px] flex-shrink-0">chevron_right</span>
+</div>
+</div>
+</section>
+<!-- 4. 训练底部管理状态栏 -->
+<section class="w-full flex flex-col gap-2 pt-1">
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">当前整体总进度</span>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">2 / 14</span>
+<span class="font-label-sm text-label-sm text-secondary">组完成 (14%)</span>
+</div>
+</div>
+<button class="min-h-[44px] px-3.5 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md font-semibold active:scale-[0.98] transition-transform" onclick="confirmEndWorkoutEarly()" type="button">
+        提早结算
+      </button>
+</div>
+<!-- 次级安全退出操作 -->
+<div class="flex items-center justify-center gap-4 py-2">
+<button class="min-h-[44px] px-3 text-secondary font-label-sm text-label-sm hover:text-on-surface active:opacity-75 flex items-center gap-1" onclick="saveDraftAndExit()" type="button">
+<span class="material-symbols-outlined text-[16px]">save</span>
+<span>保存草稿并暂停</span>
+</button>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<button class="min-h-[44px] px-3 text-error font-label-sm text-label-sm hover:underline active:opacity-75 flex items-center gap-1" onclick="confirmAbandonWorkout()" type="button">
+<span class="material-symbols-outlined text-[16px]">delete_outline</span>
+<span>放弃本次训练</span>
+</button>
+</div>
+</section>
+</div>
+<script>
+  // 组间休息计时器控制逻辑
+  let restRemainingSeconds = 74; // 01:14 初始展示
+  const totalRestSeconds = 90;   // 基准休息长度
+  let isTimerPaused = false;
+  let vibrateEnabled = true;
+
+  const ringCircumference = 326.7; // 2 * PI * 52
+  const timerTextEl = document.getElementById('restCountdownText');
+  const ringEl = document.getElementById('restProgressRing');
+  const pauseIconEl = document.getElementById('pauseIcon');
+  const pauseLabelEl = document.getElementById('pauseLabel');
+
+  function renderRestClock() {
+    if (!timerTextEl || !ringEl) return;
+    const m = String(Math.floor(Math.max(0, restRemainingSeconds) / 60)).padStart(2, '0');
+    const s = String(Math.max(0, restRemainingSeconds) % 60).padStart(2, '0');
+    timerTextEl.textContent = `${m}:${s}`;
+
+    // 更新环形进度条 offset
+    const progress = Math.min(1, Math.max(0, restRemainingSeconds / totalRestSeconds));
+    const offset = ringCircumference * (1 - progress);
+    ringEl.style.strokeDashoffset = offset;
+  }
+
+  // 倒计时主循环
+  const restInterval = setInterval(() => {
+    if (!isTimerPaused && restRemainingSeconds > 0) {
+      restRemainingSeconds--;
+      renderRestClock();
+      if (restRemainingSeconds === 0) {
+        if (navigator.vibrate && vibrateEnabled) {
+          navigator.vibrate([200, 100, 200]);
+        }
+        timerTextEl.textContent = "00:00";
+        timerTextEl.classList.add("text-primary");
+      }
+    }
+  }, 1000);
+
+  function adjustRestTimer(delta) {
+    restRemainingSeconds = Math.max(0, restRemainingSeconds + delta);
+    renderRestClock();
+  }
+
+  function togglePauseResume() {
+    isTimerPaused = !isTimerPaused;
+    if (pauseIconEl && pauseLabelEl) {
+      if (isTimerPaused) {
+        pauseIconEl.textContent = "play_circle";
+        pauseLabelEl.textContent = "继续";
+      } else {
+        pauseIconEl.textContent = "pause_circle";
+        pauseLabelEl.textContent = "暂停";
+      }
+    }
+  }
+
+  function skipRestNow() {
+    restRemainingSeconds = 0;
+    renderRestClock();
+    startNextSetDirectly();
+  }
+
+  function startNextSetDirectly() {
+    const statusTitle = document.querySelector('aside .h-11 span.text-\\[\\#18784E\\]');
+    if (statusTitle) {
+      statusTitle.textContent = "第 3 组 · 重量";
+    }
+    // 自动平滑滚动到当前动作表格或唤起编辑提示
+    window.scrollTo({ top: 120, behavior: 'smooth' });
+  }
+
+  function toggleVibratePrompt() {
+    vibrateEnabled = !vibrateEnabled;
+    const label = document.getElementById('vibrateLabel');
+    if (label) {
+      label.textContent = vibrateEnabled ? "震动提醒中" : "提醒已静音";
+    }
+  }
+
+  function confirmEndWorkoutEarly() {
+    if (confirm("当前已完成 2/14 组，确定要提早结算并生成本次锻炼战报吗？")) {
+      alert("正在生成训练总结...");
+    }
+  }
+
+  function saveDraftAndExit() {
+    alert("草稿已成功保存，随时可从主页恢复训练！");
+    history.back();
+  }
+
+  function confirmAbandonWorkout() {
+    if (confirm("确定要放弃本次背部训练吗？已记录的数据将被清除。")) {
+      history.back();
+    }
+  }
+
+  // 初始绘制一次环
+  renderRestClock();
+</script></main>
+<!-- 5. 【弹出的专用健身房数字键盘 (底部常驻浮层)】 -->
+<aside class="fixed bottom-0 inset-x-0 z-50 bg-[#EBF0ED] border-t border-[#D0D9D3] shadow-[0_-4px_24px_rgba(0,0,0,0.08)] pb-safe">
+<!-- 键盘顶部工具条 (44px 标准触控) -->
+<div class="h-11 px-3.5 flex items-center justify-between bg-[#E4ECE7] border-b border-[#D0D9D3]/70">
+<div class="flex items-center gap-1.5 text-[13px] font-bold text-[#17251D]">
+<span class="w-2 h-2 rounded-full bg-[#18784E]"></span>
+<span>当前编辑：<span class="text-[#18784E]">第 2 组 · 重量</span></span>
+</div>
+<div class="flex items-center gap-1">
+<button class="h-8 px-2.5 rounded-lg bg-white/70 active:bg-white text-[12px] font-medium text-[#17251D] flex items-center gap-0.5" onclick="switchTarget('prev')">
+<span class="material-symbols-outlined text-[16px]">expand_less</span>上一项
+        </button>
+<button class="h-8 px-2.5 rounded-lg bg-white/70 active:bg-white text-[12px] font-medium text-[#17251D] flex items-center gap-0.5" onclick="switchTarget('next')">
+<span class="material-symbols-outlined text-[16px]">expand_more</span>下一项
+        </button>
+<button class="h-8 w-8 ml-1 rounded-lg bg-white/70 active:bg-white text-[#4E5C54] flex items-center justify-center" onclick="dismissKeyboard()" title="收起键盘">
+<span class="material-symbols-outlined text-[18px]">keyboard_hide</span>
+</button>
+</div>
+</div>
+<!-- 专用大键位数字键盘区域 (4列网格，大按键，满足汗手单手盲打) -->
+<div class="p-2 grid grid-cols-4 gap-2 max-w-[420px] mx-auto">
+<!-- 第 1 行: 1, 2, 3, 一键填入上次 -->
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('1')">1</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('2')">2</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('3')">3</button>
+<button class="h-12 bg-[#F0F4F2] border border-[#D0D9D3] rounded-xl shadow-sm text-center text-[12px] font-semibold text-[#18784E] active:bg-[#E2E8E4] transition-colors flex flex-col items-center justify-center leading-none gap-0.5" onclick="pressFillLast()">
+<span>同上次</span>
+<span class="text-[10px] font-['Space_Grotesk'] text-[#4E5C54]">(35kg)</span>
+</button>
+<!-- 第 2 行: 4, 5, 6, 快速加重 (+2.5kg) -->
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('4')">4</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('5')">5</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('6')">6</button>
+<button class="h-12 bg-[#F0F4F2] border border-[#D0D9D3] rounded-xl shadow-sm text-center text-[12px] font-bold text-[#18784E] font-['Space_Grotesk'] active:bg-[#E2E8E4] transition-colors flex items-center justify-center" onclick="stepWeight(2.5)">
+        +2.5 kg
+      </button>
+<!-- 第 3 行: 7, 8, 9, 退格清除 ⌫ -->
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('7')">7</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('8')">8</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('9')">9</button>
+<button class="h-12 bg-[#F0F4F2] border border-[#D0D9D3] rounded-xl shadow-sm text-center text-[#BA1A1A] active:bg-[#E2E8E4] transition-colors flex items-center justify-center" onclick="pressBackspace()">
+<span class="material-symbols-outlined text-[24px]">backspace</span>
+</button>
+<!-- 第 4 行: 小数点 ., 0, 复制上一组, 完成并跳下一组 (绿色大按键) -->
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('.')">.</button>
+<button class="h-12 bg-white rounded-xl shadow-sm text-center font-['Space_Grotesk'] text-[24px] font-bold text-[#17251D] active:bg-[#DCE4DF] transition-colors flex items-center justify-center" onclick="pressKey('0')">0</button>
+<button class="h-12 bg-[#F0F4F2] border border-[#D0D9D3] rounded-xl shadow-sm text-[11px] font-semibold text-[#3A4A41] active:bg-[#E2E8E4] transition-colors flex flex-col items-center justify-center leading-tight" onclick="pressCopyPrevSet()">
+<span>同上组</span>
+<span class="text-[9px] text-[#66776E]">35×12</span>
+</button>
+<button class="h-12 bg-[#18784E] rounded-xl shadow-md text-white font-bold text-[13px] active:bg-[#125c3b] active:scale-[0.98] transition-all flex flex-col items-center justify-center leading-tight" onclick="confirmCurrentSet()">
+<div class="flex items-center gap-0.5">
+<span>完成</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+<span class="text-[10px] text-white/80 font-normal">下一组</span>
+</button>
+</div>
+</aside>
+<!-- 交互脚本与业务逻辑 -->
+<script>
+    // 训练时长累加器
+    let workoutSeconds = 2061; // 00:34:21
+    const timerEl = document.getElementById('workoutTimer');
+    setInterval(() => {
+      workoutSeconds++;
+      const h = String(Math.floor(workoutSeconds / 3600)).padStart(2, '0');
+      const m = String(Math.floor((workoutSeconds % 3600) / 60)).padStart(2, '0');
+      const s = String(workoutSeconds % 60).padStart(2, '0');
+      if (timerEl) {
+        timerEl.textContent = `${h}:${m}:${s}`;
+      }
+    }, 1000);
+
+    // 键盘数值管理
+    let currentInput = "37.5";
+    const weightDisplay = document.getElementById('activeWeightDisplay');
+
+    function updateDisplay() {
+      if (weightDisplay) {
+        weightDisplay.textContent = currentInput || "0";
+      }
+    }
+
+    function pressKey(key) {
+      if (key === '.' && currentInput.includes('.')) return;
+      if (currentInput === '0' && key !== '.') {
+        currentInput = key;
+      } else {
+        currentInput += key;
+      }
+      updateDisplay();
+    }
+
+    function pressBackspace() {
+      if (currentInput.length > 0) {
+        currentInput = currentInput.slice(0, -1);
+      }
+      updateDisplay();
+    }
+
+    function stepWeight(delta) {
+      let val = parseFloat(currentInput) || 0;
+      val = Math.max(0, val + delta);
+      currentInput = Number.isInteger(val) ? String(val) : val.toFixed(val % 0.5 === 0 ? 1 : 2);
+      updateDisplay();
+    }
+
+    function pressFillLast() {
+      currentInput = "35";
+      updateDisplay();
+    }
+
+    function pressCopyPrevSet() {
+      currentInput = "35";
+      updateDisplay();
+      const repsDisplay = document.getElementById('activeRepsDisplay');
+      if (repsDisplay) repsDisplay.textContent = "12";
+    }
+
+    function confirmCurrentSet() {
+      alert(`第 2 组已确认：${currentInput || '37.5'} kg × 10 次，开始休息倒计时 90s！`);
+    }
+
+    function switchTarget(direction) {
+      // 可以在重量与次数之间切换聚焦
+      const statusTitle = document.querySelector('aside .h-11 span.text-\\[\\#18784E\\]');
+      if (statusTitle) {
+        if (direction === 'next') {
+          statusTitle.textContent = "第 2 组 · 次数";
+        } else {
+          statusTitle.textContent = "第 2 组 · 重量";
+        }
+      }
+    }
+
+    function dismissKeyboard() {
+      const keyboard = document.querySelector('aside');
+      if (keyboard) {
+        keyboard.style.transform = keyboard.style.transform === 'translateY(100%)' ? 'translateY(0)' : 'translateY(100%)';
+        keyboard.style.transition = 'transform 0.25s ease-out';
+      }
+    }
+
+    function confirmAbandon() {
+      if (confirm("确定要放弃本次训练吗？所有未保存的记录将丢失。建议点击【退出 (存草稿)】保存。")) {
+        history.back();
+      }
+    }
+  </script>
+</body></html>

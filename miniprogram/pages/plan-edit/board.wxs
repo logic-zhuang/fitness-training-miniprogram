@@ -1,0 +1,206 @@
+// 周计划拖动在视图层处理：跟手、命中和边缘检测不经过逻辑层，未长按前不拦截页面滚动。
+var EDGE = 72
+var FLY_MS = 180
+var BACK_MS = 200
+
+function point(event) {
+  return (
+    (event.touches && event.touches[0]) ||
+    (event.changedTouches && event.changedTouches[0]) ||
+    null
+  )
+}
+
+function slotTop(s) {
+  return s.slots[s.index].getBoundingClientRect().top
+}
+
+function start(event, owner) {
+  var s = owner.getState()
+  var t = point(event)
+  if (!t) return
+  s.pressX = t.clientX
+  s.pressY = t.clientY
+}
+
+function lift(event, owner) {
+  var s = owner.getState()
+  var data = event.currentTarget.dataset
+  if (s.dragging || s.busy || data.locked === true || data.locked === "true")
+    return
+  var t = point(event)
+  s.slots = owner.selectAllComponents(".week-slot")
+  s.index = parseInt(data.index, 10)
+  if (!s.slots[s.index]) return
+  s.card = event.instance
+  s.from = parseInt(data.weekday, 10)
+  s.startX = t ? t.clientX : s.pressX
+  s.startY = t ? t.clientY : s.pressY
+  s.x = s.startX
+  s.y = s.startY
+  s.originTop = slotTop(s)
+  var foot = owner.selectComponent(".fixed-plan-footer")
+  s.bottomEdge = foot ? foot.getBoundingClientRect().top - EDGE : 100000
+  s.hover = -1
+  s.edge = 0
+  s.dragging = true
+  s.card.addClass("lifted")
+  s.slots[s.index].addClass("drag-source")
+  var board = owner.selectComponent(".week-board")
+  if (board) board.addClass("dragging")
+  follow(s)
+  owner.callMethod("dragStart", { weekday: s.from })
+}
+
+function follow(s) {
+  var dx = s.x - s.startX
+  var dy = s.y - s.startY - (slotTop(s) - s.originTop)
+  s.card.setStyle({
+    transform: "translate3d(" + dx + "px," + dy + "px,0) scale(1.03)",
+    transition: "none",
+  })
+  hover(s)
+}
+
+function hover(s) {
+  var best = -1
+  var first = s.slots[0].getBoundingClientRect()
+  var last = s.slots[s.slots.length - 1].getBoundingClientRect()
+  if (s.y >= first.top - 24 && s.y <= last.bottom + 24) {
+    var gap = 100000
+    for (var i = 0; i < s.slots.length; i++) {
+      var r = s.slots[i].getBoundingClientRect()
+      var d = s.y < r.top ? r.top - s.y : s.y > r.bottom ? s.y - r.bottom : 0
+      if (d < gap) {
+        gap = d
+        best = i
+      }
+    }
+  }
+  if (best === s.index) best = -1
+  if (best === s.hover) return
+  if (s.hover >= 0) s.slots[s.hover].removeClass("drop-target")
+  if (best >= 0) s.slots[best].addClass("drop-target")
+  s.hover = best
+}
+
+function edge(owner, s) {
+  var dir = s.y < EDGE ? -1 : s.y > s.bottomEdge ? 1 : 0
+  if (dir === s.edge) return
+  s.edge = dir
+  s.loop = (s.loop || 0) + 1
+  owner.callMethod("autoScroll", { dir: dir })
+  if (dir) tick(owner, s.loop)
+}
+
+// 自动滚动由逻辑层执行；这里逐帧按源格的新位置修正卡片，手指不动时卡片也不漂移。
+function tick(owner, loop) {
+  var s = owner.getState()
+  if (!s.dragging || !s.edge || s.loop !== loop) return
+  follow(s)
+  owner.requestAnimationFrame(function () {
+    tick(owner, loop)
+  })
+}
+
+function move(event, owner) {
+  var s = owner.getState()
+  if (!s.dragging) return
+  var t = point(event)
+  if (t) {
+    s.x = t.clientX
+    s.y = t.clientY
+    follow(s)
+    edge(owner, s)
+  }
+  return false
+}
+
+function release(owner, s) {
+  s.dragging = false
+  if (s.edge) {
+    s.edge = 0
+    owner.callMethod("autoScroll", { dir: 0 })
+  }
+  var target = s.hover
+  if (target >= 0) s.slots[target].removeClass("drop-target")
+  s.hover = -1
+  return target
+}
+
+function end(event, owner) {
+  var s = owner.getState()
+  if (!s.dragging) return
+  var target = release(owner, s)
+  if (target < 0) {
+    revert(owner, s)
+    owner.callMethod("dragEnd", { from: s.from, to: -1 })
+    return false
+  }
+  s.busy = true
+  var offset =
+    s.slots[target].getBoundingClientRect().top - slotTop(s)
+  s.card.setStyle({
+    transform: "translate3d(0," + offset + "px,0) scale(1)",
+    transition: "transform " + FLY_MS + "ms ease-out",
+  })
+  owner.callMethod("dragEnd", {
+    from: s.from,
+    to: parseInt(s.slots[target].getDataset().weekday, 10),
+  })
+  return false
+}
+
+function cancel(event, owner) {
+  var s = owner.getState()
+  if (!s.dragging) return
+  release(owner, s)
+  revert(owner, s)
+  owner.callMethod("dragEnd", { from: s.from, to: -1 })
+  return false
+}
+
+function revert(owner, s) {
+  s.busy = true
+  if (!s.card) return finish(owner, s)
+  s.card.setStyle({
+    transform: "translate3d(0,0,0) scale(1)",
+    transition: "transform " + BACK_MS + "ms ease-out",
+  })
+  owner.setTimeout(function () {
+    finish(owner, s)
+  }, BACK_MS + 10)
+}
+
+// 先解除锁定再清理节点：移到休息日后原卡片节点已被移除。
+function finish(owner, s) {
+  var card = s.card
+  var source = s.slots ? s.slots[s.index] : null
+  s.card = null
+  s.busy = false
+  var board = owner.selectComponent(".week-board")
+  if (board) board.removeClass("dragging")
+  if (source) source.removeClass("drag-source")
+  if (card) {
+    card.removeClass("lifted")
+    card.setStyle("")
+  }
+}
+
+// 逻辑层写入新安排（settle）或取消交换（revert）后通知视图层收尾。
+function settle(value, old, owner) {
+  if (!value || !value.seq) return
+  var s = owner.getState()
+  if (s.dragging) return
+  if (value.mode === "revert") revert(owner, s)
+  else finish(owner, s)
+}
+
+module.exports = {
+  start: start,
+  lift: lift,
+  move: move,
+  end: end,
+  cancel: cancel,
+  settle: settle,
+}

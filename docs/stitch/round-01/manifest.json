@@ -1,0 +1,521 @@
+{
+  "imported_on": "2026-10-01",
+  "source_archive": "D:/Downloads/stitch_workout_log_mobile_ui.zip",
+  "archive_sha256": "9488ff65377f9ec15550b23958103aa9a40872924ec3109ade0ab61f2708cef6",
+  "crc_verified": true,
+  "byte_for_byte_verified": true,
+  "file_count": 49,
+  "page_count": 24,
+  "pages": [
+    {
+      "folder": "_1",
+      "html": "raw/stitch_workout_log_mobile_ui/_1/code.html",
+      "title": "Training",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 623,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_2",
+      "html": "raw/stitch_workout_log_mobile_ui/_2/code.html",
+      "title": "Plans",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 462,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_3",
+      "html": "raw/stitch_workout_log_mobile_ui/_3/code.html",
+      "title": "History",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 558,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_4",
+      "html": "raw/stitch_workout_log_mobile_ui/_4/code.html",
+      "title": "Profile",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 423,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_5",
+      "html": "raw/stitch_workout_log_mobile_ui/_5/code.html",
+      "title": "Active Workout",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 571,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_6",
+      "html": "raw/stitch_workout_log_mobile_ui/_6/code.html",
+      "title": "Plan Editor",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 485,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_7",
+      "html": "raw/stitch_workout_log_mobile_ui/_7/code.html",
+      "title": "Exercise Selection",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 658,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_8",
+      "html": "raw/stitch_workout_log_mobile_ui/_8/code.html",
+      "title": "Workout Summary",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 431,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_9",
+      "html": "raw/stitch_workout_log_mobile_ui/_9/code.html",
+      "title": "History Detail",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 316,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_10",
+      "html": "raw/stitch_workout_log_mobile_ui/_10/code.html",
+      "title": "Body Stats",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 648,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_11",
+      "html": "raw/stitch_workout_log_mobile_ui/_11/code.html",
+      "title": "Photo Comparison",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 647,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_12",
+      "html": "raw/stitch_workout_log_mobile_ui/_12/code.html",
+      "title": "Auth",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 706,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_13",
+      "html": "raw/stitch_workout_log_mobile_ui/_13/code.html",
+      "title": "Active Workout",
+      "main_has_visible_text": false,
+      "image": {
+        "valid": true,
+        "width": 706,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_14",
+      "html": "raw/stitch_workout_log_mobile_ui/_14/code.html",
+      "title": "背部 + 二头肌",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 554,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_15",
+      "html": "raw/stitch_workout_log_mobile_ui/_15/code.html",
+      "title": "背部 + 二头肌",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 388,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_16",
+      "html": "raw/stitch_workout_log_mobile_ui/_16/code.html",
+      "title": "Active Rest Settings",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 706,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_17",
+      "html": "raw/stitch_workout_log_mobile_ui/_17/code.html",
+      "title": "Exercise Substitution Sheet",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": false,
+        "reason": "Export contains error text instead of PNG"
+      }
+    },
+    {
+      "folder": "_18",
+      "html": "raw/stitch_workout_log_mobile_ui/_18/code.html",
+      "title": "Active Session",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 540,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_19",
+      "html": "raw/stitch_workout_log_mobile_ui/_19/code.html",
+      "title": "Active Workout",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 706,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_20",
+      "html": "raw/stitch_workout_log_mobile_ui/_20/code.html",
+      "title": "Training Log",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 680,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_21",
+      "html": "raw/stitch_workout_log_mobile_ui/_21/code.html",
+      "title": "Active Workout",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 706,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_22",
+      "html": "raw/stitch_workout_log_mobile_ui/_22/code.html",
+      "title": "Active Workout",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 439,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "_23",
+      "html": "raw/stitch_workout_log_mobile_ui/_23/code.html",
+      "title": "Routines",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 315,
+        "height": 1600
+      }
+    },
+    {
+      "folder": "pr",
+      "html": "raw/stitch_workout_log_mobile_ui/pr/code.html",
+      "title": "Exercise Detail",
+      "main_has_visible_text": true,
+      "image": {
+        "valid": true,
+        "width": 555,
+        "height": 1600
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_1/code.html",
+      "bytes": 16708,
+      "sha256": "a313d04be5634e86c553204e3940e96cc9c9a130f24c2365490695f80797f705"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_1/screen.png",
+      "bytes": 231694,
+      "sha256": "194bd6b26d249039ac6167e609e90fc941e04013d63fe467530a9ee779d8f7f4"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_2/code.html",
+      "bytes": 21595,
+      "sha256": "e8861073a8baf03c2602ca460ae621663165b60164c7b4ef4777d5d0c1470564"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_2/screen.png",
+      "bytes": 202997,
+      "sha256": "f49993b6b6a3e49dad6624603a08b0e559d7e6daa59f3f066be1cd89cb1ed61f"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_3/code.html",
+      "bytes": 20465,
+      "sha256": "d628846ce6b8e58044faf49c3a49d60de0513839bfd1e9f1758ae14fa27a78bb"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_3/screen.png",
+      "bytes": 253126,
+      "sha256": "671c1eb1116d9792d72ed042997ad7c53ee41148b7967d989bf9c7fbea2a7277"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_4/code.html",
+      "bytes": 20161,
+      "sha256": "e72e31b7e8d285f726604cd261b1fd73a92c1f1bf4f9aa42e9c4c10bd0f93f72"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_4/screen.png",
+      "bytes": 206693,
+      "sha256": "e3e14eb8e1b63128692bc8641e31330d4d74ee29f84c7db7a120cfda07ad5e11"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_5/code.html",
+      "bytes": 29063,
+      "sha256": "0b7ecf4296692a263e8e95688d07362164cdfaead5d809790bf6c2bcfa1d830d"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_5/screen.png",
+      "bytes": 222902,
+      "sha256": "f5decb06e69719b513e7cab9186fcbbb1312842baeff7f48374b1315a7b0f02c"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_6/code.html",
+      "bytes": 28493,
+      "sha256": "7e22573a2fa45375e3d0d705f2ccac6bba485f5417b3c4bf7b78d9ac5cabb813"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_6/screen.png",
+      "bytes": 241290,
+      "sha256": "6ffc12c8bfc618128bcef705205f279dbb41de3a0a55540322745a390ea9fa2a"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_7/code.html",
+      "bytes": 23084,
+      "sha256": "41e83a73e08b997a1306995edab71e12138cfe9b3282b7eafffe5358240035b4"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_7/screen.png",
+      "bytes": 305776,
+      "sha256": "a600de46c567c6527302a4541d66bcd86c4d060d2104d696410072f106638578"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_8/code.html",
+      "bytes": 18502,
+      "sha256": "bf8c873e58607dbe7ffdd7f92d2d2595a04a023718b8ea94b6c0640198c02a4c"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_8/screen.png",
+      "bytes": 249813,
+      "sha256": "d5290330e06d993690c3f1a55a5f19d3c48cbd35231f8120ef5c3c3320ef8bb1"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_9/code.html",
+      "bytes": 36008,
+      "sha256": "c52640085fd4f64bb2cb72d163bf3d40931d295eb3c5a3c7abe12b7a624c2011"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_9/screen.png",
+      "bytes": 140399,
+      "sha256": "8653ba8455a142b9c1ce7f6b20a5cad12a150f3edfe9bd8cdc87360fb0b13f3d"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_10/code.html",
+      "bytes": 21174,
+      "sha256": "48caa2c62d20be3dcae227421c8caf3ffcafa3c57afa783ec88fbea6e4ba2874"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_10/screen.png",
+      "bytes": 312261,
+      "sha256": "91bb598d72119bb999fa006af4f1816768a3b01f3fecf36bbd7012d86af69bf1"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_11/code.html",
+      "bytes": 18267,
+      "sha256": "c6ef83ecc485a4707721318f96ee9e289ef93392e99f8a2c1bde90b4e0b9a4c0"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_11/screen.png",
+      "bytes": 430311,
+      "sha256": "3cbff8089ed31d242e53927a0049555e8610f57b011df96ddd5087e838db5c6a"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_12/code.html",
+      "bytes": 15974,
+      "sha256": "b9e44495cef32f54bf6cb45f1b13bcedbe0e74a4ea25462590c3cc8a28d35f22"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_12/screen.png",
+      "bytes": 201653,
+      "sha256": "323aadabd57aef7e1f4ece04daa0452dacea254303c00daf4c0e54d711bc3af3"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_13/code.html",
+      "bytes": 11828,
+      "sha256": "085c886e546cb4ee1f1eaa6cf56675a737d5cc6500286ab14365ac9685bff9f5"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_13/screen.png",
+      "bytes": 22975,
+      "sha256": "d9d1df58cedc7efec764a62eea70159793fae87158ec3fd586abf959a7370c05"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_14/code.html",
+      "bytes": 22548,
+      "sha256": "4d4e2e29bb8f9a32811600a48ef8d60b79415d6f7d13beb34ca1bb64d0a46383"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_14/screen.png",
+      "bytes": 180860,
+      "sha256": "b8c191e5cfeca944903e14d00fce7f29f88de0e39b68e1ca22e41f2bc774ca10"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_15/code.html",
+      "bytes": 31522,
+      "sha256": "7761da706c0fdbec48f3ed3a628efe10912d352e2826b4ac19b695b23739c66f"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_15/screen.png",
+      "bytes": 186495,
+      "sha256": "04ef4e420cfc95e78d082e53b50ff0b311b99256d7640369daf626cf0e8c4fea"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_16/code.html",
+      "bytes": 21974,
+      "sha256": "7e8e84e7ceffd977c8570f81b31d07b035a3c21f0abadc0abb26fab3eebb224a"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_16/screen.png",
+      "bytes": 178442,
+      "sha256": "27ba59c888516c98ecd800c20335c97a9d77e14955691b9878c8c972070c5dd7"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_17/code.html",
+      "bytes": 23653,
+      "sha256": "e63fc476dc199def9b8498b669fb8862b5263d1c6994f49e6c03a20888e53bea"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_17/screen.png",
+      "bytes": 28,
+      "sha256": "6c9a02e2605929162392587c714f045251761b8a72c4bced6d4cbc2e4303ef8b"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_18/code.html",
+      "bytes": 22801,
+      "sha256": "9690d00f04254dc8c577884195b6711775b8b4f57a582b807a355246e954c7af"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_18/screen.png",
+      "bytes": 283798,
+      "sha256": "21904518ab6268061e02cad44c81423e5cd02e020e9d81f7c57f1dfb33022d15"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_19/code.html",
+      "bytes": 16099,
+      "sha256": "5364191d9cdee4ba3533dbb4b2f7bb6702acd97ce132b8aae51435f44b084216"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_19/screen.png",
+      "bytes": 115360,
+      "sha256": "15ebbe247c680a84c941c54c853cc8c59f7d508e63931ad5b1b05d0a902bb7d1"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_20/code.html",
+      "bytes": 16748,
+      "sha256": "deb26c459b906e8c60dafbd4ebdd9d84a7aa131855335684333c99bbe028e7c1"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_20/screen.png",
+      "bytes": 245129,
+      "sha256": "bd153221d282d4b0df349532afdc05a2feb7b3260acadb457c8233bf7b3a7a6f"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_21/code.html",
+      "bytes": 13827,
+      "sha256": "2f0888d1ea55cb5dfab45b11a99f183ca1e5f653d7f9b43c52ef439966d90f89"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_21/screen.png",
+      "bytes": 247459,
+      "sha256": "2c1d9076f82f816ac9a6bb8693516bacc293b80057ca7fffde06f500795410f5"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_22/code.html",
+      "bytes": 21346,
+      "sha256": "46646df44f29c33e869c577cfabc650ef0e4b8826574a4ec872bfae2d4723551"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_22/screen.png",
+      "bytes": 212834,
+      "sha256": "3d64a599b9dbd542a355b00668e326dd1a15ec12f1c9addd1b9c83570f4899dc"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_23/code.html",
+      "bytes": 26112,
+      "sha256": "4422c216581a8fc85a586eb7a7fc5f6d7f122238da82abc7e4156bf12fc45f85"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/_23/screen.png",
+      "bytes": 298913,
+      "sha256": "3983b5d778c1dc0039cca1fda6588837bd76644b3e89c2b4b16f5eca306a0b68"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/pr/code.html",
+      "bytes": 25067,
+      "sha256": "9fba2d02b5ba275f37eeebb308a6074ef286726bf326dbed0a5fd5239fd89159"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/pr/screen.png",
+      "bytes": 346752,
+      "sha256": "09cdc89f780ef34c18d74106073b8d14c2552fee078a7651370d98aff9719b4a"
+    },
+    {
+      "path": "raw/stitch_workout_log_mobile_ui/calm_utility_editorial/DESIGN.md",
+      "bytes": 9832,
+      "sha256": "818d8d9ea50e054fecdb1443433ffdee72bc1c9841f5f9b92e815063257fca01"
+    }
+  ]
+}

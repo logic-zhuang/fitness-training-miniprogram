@@ -1,0 +1,90 @@
+<import src="../../templates/status.wxml" />
+<view class="page workout-page" wx:if="{{ready}}">
+<template is="save-status" data="{{status, phase, error}}"/>
+<view class="eyebrow">{{workout.date}} · {{completion.source}}</view>
+<view class="between"><view class="heading">{{saved ? (historyMode ? '训练总结' : '本次训练已保存') : preparing ? '调整今天的动作' : workout.reviewing ? '准备提交训练' : workout.name}}</view><text class="muted">{{elapsed}}</text></view>
+<view class="error" wx:if="{{finishError}}">{{finishError}} 内容已保留，可重试。</view>
+<block wx:if="{{saved}}">
+<view class="panel accent-panel"><view class="tag">{{completion.label}}</view><view class="stats"><view><view class="metric">{{exerciseCount}}</view>个动作</view><view><view class="metric">{{doneSets}}</view>实际组</view><view>{{duration}}<view class="muted">总用时</view></view></view><view wx:if="{{completion.total}}">目标完成 {{completion.done}} / {{completion.total}} 组</view></view>
+<view class="section-title">本次变化</view><block wx:for="{{comparisons}}" wx:key="id"><view class="panel" wx:if="{{allChanges || index < 2}}"><view class="panel-title">{{item.name}}</view><view>{{item.text}}</view><view class="muted small">{{item.date || '首次记录'}} · 本次 {{item.current}}</view></view></block><button wx:if="{{comparisons.length > 2}}" class="text-button" bindtap="showChanges">{{allChanges ? '收起' : '查看全部变化'}}</button>
+<view class="panel"><button class="text-button" bindtap="showDetails">{{detailsOpen ? '收起动作明细' : '查看动作明细'}}</button><block wx:if="{{detailsOpen}}"><view class="exercise-line" wx:for="{{summaryExercises}}" wx:key="name"><view>{{item.name}} · {{item.count}} 组</view><view class="muted small">{{item.detail || '无已确认组'}}</view></view></block></view>
+<body-map exercises="{{workout.exercises}}"/>
+<view class="panel"><view class="panel-title">本周积累</view>计划达标 {{week.completed}} / {{week.total}} · 实际训练 {{week.sessions}} 次</view>
+<view class="panel"><view class="panel-title">今日照片</view><view class="muted">上传部位照片或整体照片，之后可在日志里按部位对比变化。</view><button class="action secondary" bindtap="openPhotoPanel">＋ 上传照片</button><button class="text-button" bindtap="viewTodayPhotos">到日志页查看今日照片</button></view>
+<view wx:if="{{!historyMode}}" class="panel"><view class="panel-title">今天整体感觉如何？</view><view class="actions"><button wx:for="{{['轻松','适中','吃力']}}" wx:key="*this" class="text-button {{workout.exertion === item ? 'selected-feeling' : ''}}" data-value="{{item}}" bindtap="exertion">{{item}}</button></view><textarea class="goal" cursor-spacing="140" value="{{workout.note}}" data-field="note" bindinput="input" placeholder="感受和备注（可选）" maxlength="5000"/><button class="text-button" bindtap="saveDetails">保存补充内容</button></view>
+<view wx:if="{{historyMode}}" class="panel"><view class="muted">{{workout.exertion || workout.feeling || '感受未填写'}}</view><view class="note" wx:if="{{workout.note}}">{{workout.note}}</view><button class="text-button" bindtap="edit">修改记录</button><button class="text-button danger" bindtap="removeHistory">删除记录</button></view>
+
+</block>
+<block wx:elif="{{workout.reviewing}}">
+<view class="panel accent-panel"><view class="completion-mark">✓</view><view class="panel-title">{{completion.complete ? '本次目标全部完成' : '记录已整理，等待提交'}}</view>{{exerciseCount}} 个动作 · {{doneSets}} 实际组 · {{duration}}</view>
+<view class="panel"><button class="text-button" bindtap="showDetails">{{detailsOpen ? '收起提交明细' : '查看提交明细'}}</button><block wx:if="{{detailsOpen}}"><view class="exercise-line" wx:for="{{summaryExercises}}" wx:key="name"><view>{{item.name}} · {{item.count}} 组</view><view class="muted small">{{item.detail || '尚未完成组'}}</view></view></block><view class="muted" wx:if="{{completion.total && !completion.complete}}">目标 {{completion.done}} / {{completion.total}} 组，将保存部分训练。</view></view>
+<view class="panel"><view class="label">校正用时（秒，可选）</view><input class="field" cursor-spacing="140" type="number" value="{{workout.timer.manualSeconds}}" bindblur="manualDuration" placeholder="保留实际计时"/></view>
+
+</block>
+<block wx:elif="{{workout.flow.stage === 'exercise-complete' && !historyMode}}">
+<view class="panel completion-panel"><view class="completion-mark">✓</view><view class="heading">{{exercise.name}}已完成</view><view class="exercise-line" wx:for="{{exercise.sets}}" wx:key="id" wx:if="{{item.done}}">{{exercise.recordType === 'duration' ? item.durationSeconds + ' 秒' : (item.weight || '自重') + ' × ' + item.reps + ' 次'}}</view><view class="note">下一个：{{nextName}}</view><view class="muted small">休息计时继续；可留在此页回看。</view></view>
+
+</block>
+<block wx:else>
+<view class="note" wx:if="{{preparing}}">调整仅用于本次，计时尚未开始。可以从动作的“更多”修改组数、替换或排序。</view>
+<view class="panel" wx:if="{{editing || workout.source === 'backfill'}}"><input class="field" value="{{workout.name}}" data-field="name" bindinput="input" placeholder="训练名称" maxlength="80"/><picker mode="date" value="{{workout.date}}" end="{{today}}" data-field="date" bindchange="input"><view class="field">真实训练日期：{{workout.date}} ▾</view></picker></view>
+<view class="panel" wx:if="{{legacyTargets && !legacyAcknowledged}}"><view>旧草稿目标未保存，实际记录仍保留。</view><button class="action" bindtap="confirmTargets">确认本次目标</button><button class="text-button" bindtap="preserveLegacy">仅保留旧记录</button></view>
+<block wx:else>
+<view class="between"><text>动作 {{workout.exercises.length ? selected + 1 : 0}} / {{workout.exercises.length}}</text><button class="text-button" bindtap="showExerciseList">{{listOpen ? '收起' : '全部动作'}}</button></view>
+<view class="panel" wx:if="{{listOpen}}"><view class="exercise-line between" wx:for="{{movementRows}}" wx:key="id" data-index="{{index}}" bindtap="select"><text>{{item.name}}</text><text class="muted small">{{item.label}}</text></view></view>
+<view class="panel" wx:if="{{exercise}}"><view class="between"><view class="panel-title">{{exercise.name}}</view><button class="text-button" wx:if="{{!historyMode || editing}}" bindtap="menu">更多</button></view><view class="muted small">{{previous ? '上次：' + previous : '首次记录这个动作'}}</view><view class="hint-actions" wx:if="{{lastSet && exercise.recordType === 'reps'}}"><button class="text-button" bindtap="applyLastSets">沿用上次，填入全部空组</button><button class="text-button" wx:if="{{copyReady}}" bindtap="copyFirstToAll">复制第 1 组到其余组</button></view>
+<block wx:if="{{!historyMode || editing}}"><view class="set-grid label"><text>组</text><text>{{exercise.recordType === 'duration' ? '秒数' : '重量 kg'}}</text><text>{{exercise.recordType === 'duration' ? '计时' : '次数'}}</text><text>确认</text><text></text></view>
+<view class="set-grid {{item.done ? 'done' : ''}}" wx:for="{{exercise.sets}}" wx:key="id"><text>{{index + 1}}</text><block wx:if="{{exercise.recordType === 'duration'}}"><input cursor-spacing="180" type="number" value="{{item.durationSeconds}}" disabled="{{preparing || timingSetId === item.id}}" placeholder="秒" data-index="{{index}}" data-field="durationSeconds" bindinput="setInput"/><button class="text-button" wx:if="{{timingSetId === item.id}}" bindtap="stopCurrentSet">{{setClock}} 停</button><button wx:else class="text-button" data-index="{{index}}" bindtap="startSetTimer">{{item.durationSeconds ? '继续' : '开始'}}</button></block><block wx:else><input cursor-spacing="180" type="digit" value="{{item.weight}}" placeholder="自重" data-index="{{index}}" data-field="weight" bindinput="setInput"/><input cursor-spacing="180" type="number" value="{{item.reps}}" placeholder="次数" data-index="{{index}}" data-field="reps" bindinput="setInput"/></block><button class="check {{item.done ? 'checked' : ''}}" data-index="{{index}}" disabled="{{preparing}}" bindtap="toggleSet">{{item.done ? '✓' : '完成'}}</button><button class="remove" data-index="{{index}}" bindtap="removeSet">×</button></view>
+<view class="hint-actions" wx:if="{{!preparing}}"><button class="text-button" bindtap="addSet">＋ 添加一组</button><button class="text-button" bindtap="openTargets">调整组数</button><button class="text-button" bindtap="replace">替换动作</button></view><textarea wx:if="{{noteOpen}}" class="goal" value="{{exercise.note}}" bindinput="exerciseNote" cursor-spacing="140" placeholder="动作备注"/>
+</block><block wx:else><view class="exercise-line" wx:for="{{exercise.sets}}" wx:key="id">第 {{index + 1}} 组 · {{exercise.recordType === 'duration' ? (item.durationSeconds || '未填') + ' 秒' : (item.weight || '自重') + ' × ' + (item.reps || '未填') + ' 次'}} · {{item.done ? '已完成' : '未完成'}}</view></block></view>
+<block wx:if="{{!historyMode || editing}}"><view class="hint-actions"><button class="text-button" bindtap="openPicker">＋ 添加动作</button></view><view wx:for="{{targetGroups}}" wx:key="id" wx:if="{{item.missing}}" class="error">{{item.name}} 缺少录入行<button class="text-button" data-id="{{item.id}}" bindtap="restoreTarget">恢复动作</button></view><view class="muted small" wx:if="{{workout.execution}}">计划目标 {{completion.done}} / {{completion.total}} 组</view><view class="muted small" wx:else>自由训练按本次组数完成动作，不影响每周计划达标。</view></block>
+<block wx:else><view class="note">{{workout.note}}</view><button class="action" bindtap="edit">修改记录</button><button class="text-button" bindtap="addPhotos">照片日志</button><button class="text-button danger" bindtap="removeHistory">删除记录</button></block>
+</block></block></view>
+<view class="workout-dock" wx:if="{{ready}}">
+  <view class="rest-bar" wx:if="{{restActive && !historyMode && !workout.reviewing && !saved}}">
+    <view class="between" bindtap="expandRest"><text>{{restPaused ? '休息暂停' : '组间休息'}} · {{restClock}}</text><text>{{restExpanded ? '收起' : '展开'}} ▾</text></view>
+    <view class="rest-actions" wx:if="{{restExpanded}}"><button bindtap="rest" data-action="{{restPaused ? 'resume' : 'pause'}}">{{restPaused ? '继续' : '暂停'}}</button><button bindtap="rest" data-action="extend">＋30 秒</button><button bindtap="rest" data-action="cancel">取消</button></view>
+  </view>
+  <view class="workout-footer">
+    <block wx:if="{{saved}}"><button class="action" bindtap="goHome">完成，返回首页</button><button class="text-button" bindtap="viewHistory">查看本次日志</button></block>
+    <block wx:elif="{{workout.reviewing}}"><button class="action" bindtap="save" loading="{{saving}}" disabled="{{saving}}">{{historyMode ? '保存记录修改' : completion.complete ? '提交今日训练' : '提交本次训练'}}</button><button class="text-button" bindtap="continueTraining" disabled="{{saving}}">{{historyMode ? '返回继续编辑' : '返回继续训练'}}</button></block>
+    <block wx:elif="{{workout.flow.stage === 'exercise-complete' && !historyMode}}"><button class="action" bindtap="advance">立即继续下一个动作</button><button class="text-button" bindtap="stopAdvance">留在此页</button></block>
+    <block wx:elif="{{preparing}}"><button class="action" bindtap="beginTraining">开始本次训练</button><button class="text-button" bindtap="later">保留调整，稍后开始</button></block>
+    <block wx:elif="{{!legacyTargets || legacyAcknowledged}}"><button class="action" bindtap="finish">{{historyMode ? '查看并保存修改' : '结束并查看提交内容'}}</button><view class="between"><button class="text-button" bindtap="pause" wx:if="{{workout.source === 'live' && !historyMode}}">{{paused ? '继续计时' : '暂停计时'}}</button><button class="text-button" bindtap="later">{{historyMode ? '返回日志' : '稍后继续'}}</button><button class="text-button" bindtap="menu" wx:if="{{exercise && !historyMode}}">更多</button></view></block>
+  </view>
+</view>
+<view class="target-mask" wx:if="{{targetOpen}}"><view class="panel"><view class="panel-title">{{workout.execution ? '调整本次目标' : '调整本次组数'}} · {{exercise.name}}</view><view class="label">{{workout.execution ? '目标组数（0 表示移出本次目标）' : '本次组数（已确认组保留）'}}</view><input class="field" type="number" value="{{targetCount}}" data-field="targetCount" bindinput="targetField"/><block wx:if="{{exercise.recordType === 'duration'}}"><view>每组目标秒数</view><input class="field" type="number" value="{{targetSeconds}}" data-field="targetSeconds" bindinput="targetField"/></block><view class="error" wx:if="{{targetError}}">{{targetError}}</view><button class="action" bindtap="applyTargets">确认调整</button><button class="text-button" bindtap="closeTargets">取消</button></view></view>
+<view class="sheet-mask" wx:if="{{menuOpen}}" bindtap="closeMenu" catchtouchmove="keepSheet">
+  <view class="sheet-panel" catchtap="keepSheet">
+    <view class="between"><view class="panel-title">{{menuName}}</view><button class="text-button" bindtap="closeMenu">关闭</button></view>
+    <scroll-view scroll-y class="sheet-body">
+      <block wx:for="{{menuGroups}}" wx:for-item="group" wx:key="title"><view class="label sheet-group">{{group.title}}</view><button class="sheet-action {{item.danger ? 'danger' : ''}}" wx:for="{{group.actions}}" wx:key="id" data-action="{{item.id}}" bindtap="menuAction">{{item.title}}<text class="muted">{{item.detail}}</text></button></block>
+    </scroll-view>
+    <button class="text-button sheet-cancel" bindtap="closeMenu">取消</button>
+  </view>
+</view>
+<view class="sheet-mask" wx:if="{{orderOpen}}" bindtap="closeOrder" catchtouchmove="keepSheet">
+  <view class="sheet-panel" catchtap="keepSheet">
+    <view class="between"><view class="panel-title">移动 {{orderName}}</view><button class="text-button" bindtap="closeOrder">关闭</button></view>
+    <view class="label sheet-label">移到指定位置</view><picker range="{{positions}}" value="{{orderPosition}}" bindchange="choosePosition"><view class="field">{{positions[orderPosition]}} ▾</view></picker>
+    <view class="label">确认后的动作顺序</view>
+    <scroll-view scroll-y class="sheet-body order-body"><view class="exercise-line between {{item.selected ? 'order-selected' : ''}}" wx:for="{{orderRows}}" wx:key="id"><text class="grow">{{item.position}}. {{item.name}}</text><text class="small" wx:if="{{item.selected}}">正在移动</text></view></scroll-view>
+    <view class="error" wx:if="{{orderError}}">{{orderError}} 可重试。</view>
+    <button class="action" bindtap="applyOrder">确认这个顺序</button><button class="text-button sheet-cancel" bindtap="closeOrder">取消</button>
+  </view>
+</view>
+<exercise-picker open="{{pickerOpen}}" single="{{pickerSingle}}" bindclose="closePicker" bindchoose="chooseExercises"/>
+
+<view class="photo-mask" wx:if="{{photoPanel}}"><view class="panel photo-panel">
+  <view class="panel-title">上传照片</view>
+  <view class="between photo-kind">
+    <button class="filter {{photoKind === 'workout' ? 'active' : ''}}" data-kind="workout" bindtap="setPhotoKind">部位照片</button>
+    <button class="filter {{photoKind === 'body' ? 'active' : ''}}" data-kind="body" bindtap="setPhotoKind">整体照片</button>
+  </view>
+  <view wx:if="{{photoKind === 'workout'}}"><view class="label">部位说明（可选）</view><input class="field" value="{{photoTags}}" data-field="photoTags" bindinput="photoField" maxlength="160" placeholder="例如：胸、三头"/></view>
+  <view wx:if="{{photoKind === 'body'}}"><view class="label">拍摄角度</view><view class="muted small">建议正面 / 侧面 / 背面各拍一张，便于对比；不强制。</view><view class="between photo-kind"><button wx:for="{{['正面','侧面','背面']}}" wx:key="*this" class="filter {{photoAngle === item ? 'active' : ''}}" data-angle="{{item}}" bindtap="pickPhotoAngle">{{item}}</button></view></view>
+  <view class="error" wx:if="{{photoError}}">{{photoError}}</view>
+  <button class="action" bindtap="addPhotos" loading="{{photoUploading}}" disabled="{{photoUploading}}">相册 / 拍照</button>
+  <button class="text-button" bindtap="closePhotoPanel">取消</button>
+</view></view>
+

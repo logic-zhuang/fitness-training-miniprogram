@@ -1,0 +1,18 @@
+# 密钥与配置
+.env
+.env.*
+!.env.example
+config.js
+!config.example.js
+
+# 本地环境
+pgdata/
+.venv/
+node_modules/
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+
+# 日志与临时文件
+*.log
+.DS_Store

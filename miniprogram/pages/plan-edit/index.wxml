@@ -1,0 +1,40 @@
+<wxs module="board" src="./board.wxs"></wxs>
+<view class="page plan-page" wx:if="{{ready}}">
+  <block wx:if="{{!selectedDay}}">
+    <view class="heading plan-heading">每周训练计划</view>
+    <view class="plan-name-row"><text class="label">计划名称</text><input cursor-spacing="120" class="field plan-name" value="{{plan.name}}" maxlength="80" bindinput="inputPlan" /></view>
+    <view class="panel" wx:if="{{legacy}}"><view class="panel-title">确认旧计划的星期</view><view class="muted small">原顺序计划已保留。逐个确认星期后再保存。</view><button class="action secondary" wx:for="{{legacyDays}}" wx:key="id" data-id="{{item.id}}" bindtap="editDay">{{item.name}} · {{item.confirmed ? '已确认' : '待确认'}}</button></view>
+    <view class="board-hint">{{legacy ? '确认并保存旧计划各训练日的星期后，可长按卡片拖动调整。' : '长按卡片拖到另一天：有安排则互换，休息日则移入。点击卡片编辑。只影响以后开始的训练。'}}</view>
+    <view class="week-board" change:drop="{{board.settle}}" drop="{{drop}}">
+      <view class="week-slot {{landed[item.weekday] ? 'landed' : ''}}" id="week-{{item.weekday}}" wx:for="{{weeks}}" wx:key="weekday" data-weekday="{{item.weekday}}">
+        <view class="slot-day">{{item.label}}</view>
+        <view wx:if="{{item.day}}" class="day-card" data-id="{{item.day.id}}" data-weekday="{{item.weekday}}" data-index="{{index}}" data-locked="{{legacy}}" bindtap="editDay" bindtouchstart="{{board.start}}" bindlongpress="{{board.lift}}" bindtouchmove="{{board.move}}" bindtouchend="{{board.end}}" bindtouchcancel="{{board.cancel}}">
+          <view class="card-main"><view class="card-title">{{item.day.name}}</view><view class="card-meta">{{item.exerciseCount ? item.exerciseCount + ' 个动作 · ' + item.setCount + ' 组' : '尚未添加动作'}}</view></view>
+          <view class="card-side"><text class="card-edit">编辑 ›</text><text class="drop-badge">互换</text></view>
+        </view>
+        <view wx:else class="rest-card" data-weekday="{{item.weekday}}" bindtap="addDay">
+          <text class="rest-label">休息</text>
+          <view class="card-side"><text class="card-edit">＋ 安排</text><text class="drop-badge">移到这里</text></view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="heading">编辑 {{weekdays[selectedDay.weekdayIndex]}}</view><view class="muted">只修改以后开始的训练。动作移动后会留在当前位置。</view>
+    <view class="panel"><view class="label">训练名称</view><input cursor-spacing="120" class="field" value="{{selectedDay.name}}" maxlength="80" bindinput="dayName" /><view class="label">安排星期</view><picker range="{{weekdayOptions}}" value="{{selectedDay.weekdayIndex}}" bindchange="weekday"><view class="field">{{weekdays[selectedDay.weekdayIndex]}} ▾</view></picker><button wx:if="{{!selectedDay.confirmed}}" class="action secondary" bindtap="confirmWeekday">确认安排在这个星期</button></view>
+    <view class="panel" wx:for="{{selectedDay.exercises}}" wx:key="id">
+      <view class="between"><view class="panel-title">{{item.name}}</view><text class="tag">{{item.muscle}}</text></view><view class="muted small">{{item.recordType === 'duration' ? '按时长记录' : '重量 / 自重与次数'}}</view>
+      <view class="label">目标组数</view><picker range="{{counts}}" value="{{item.countIndex}}" data-id="{{item.id}}" bindchange="setCount"><view class="field">{{item.sets.length}} 组 ▾</view></picker>
+      <block wx:if="{{item.recordType === 'duration'}}"><view class="label">每组目标秒数（可选）</view><input cursor-spacing="120" class="field" type="number" value="{{item.targetSeconds}}" data-id="{{item.id}}" bindblur="targetSeconds" placeholder="例如 30 秒；留空只要求有效时长" /></block>
+      <view class="label">动作位置</view><picker range="{{positions}}" value="{{index}}" data-id="{{item.id}}" bindchange="moveExercise"><view class="field">第 {{index + 1}} 位 ▾</view></picker>
+      <view class="label">动作备注</view><input cursor-spacing="120" class="field" value="{{item.note}}" maxlength="5000" data-id="{{item.id}}" bindinput="exerciseNote" />
+      <button class="text-button danger" data-id="{{item.id}}" bindtap="removeExercise">移除这个动作</button>
+    </view>
+    <button class="action secondary" bindtap="openPicker">＋ 从我的 / 内置 / 最近动作添加</button>
+    <button class="text-button danger" bindtap="removeDay">取消这天的训练安排</button>
+  </block>
+  <view class="error" wx:if="{{error}}">{{error}}，修改已保留。</view>
+  <view class="fixed-plan-footer"><view class="footer-note" wx:if="{{dirty}}">有未保存的修改，保存整份计划后生效</view><button wx:if="{{selectedDay}}" class="action secondary" bindtap="overview">返回周概览（保留草稿）</button><button class="action" bindtap="save" loading="{{saving}}" disabled="{{saving}}">保存整份计划</button></view>
+  <exercise-picker open="{{pickerOpen}}" bindclose="closePicker" bindchoose="chooseExercises" />
+</view>
+

@@ -1,0 +1,28 @@
+<import src="../../templates/status.wxml" />
+<view class="page">
+  <template is="save-status" data="{{status, phase, error}}" />
+  <view class="between"><view class="heading">训练记录</view><button class="text-button" bindtap="backfill" disabled="{{!ready}}">补录</button></view>
+  <block wx:if="{{ready}}">
+    <view class="panel accent-panel">
+      <view class="panel-title">这一周的坚持</view>
+      <view class="stats"><view><view class="metric">{{overview.sessions}}</view><view class="metric-caption">次训练</view></view><view><view class="metric">{{overview.sets}}</view><view class="metric-caption">完成组数</view></view><view><view class="metric">{{overview.days}}</view><view class="metric-caption">个训练日</view></view></view>
+      <view class="muted small">上周 {{overview.previousSessions}} 次 · 本周有计时的训练共 {{overview.minutes}} 分钟</view>
+      <view class="distribution" wx:for="{{muscles}}" wx:key="muscle"><view class="between small"><text>{{item.muscle}}</text><text>{{item.sets}} 组 · {{item.percent}}%</text></view><view class="progress"><view class="progress-fill" style="width:{{item.percent}}%;" /></view></view>
+    </view>
+    <input class="field" placeholder="搜索动作、训练名称或日期" value="{{search}}" bindinput="search" />
+    <view class="panel"><view class="panel-title">动作变化</view><picker wx:if="{{trendNames.length}}" range="{{trendNames}}" value="{{trendIndex}}" bindchange="trend"><view class="field">{{trendNames[trendIndex]}} ▾</view></picker><view class="muted small">{{trendLabel}} · 当前筛选最近八次，点击柱条查看原记录</view><view class="trend-bars"><view class="trend-point" wx:for="{{trendPoints}}" wx:key="workoutId" bindtap="open" data-id="{{item.workoutId}}"><view class="small">{{item.value}}</view><view class="trend-bar" style="height:{{item.height}}rpx;" /><view class="small muted">{{item.shortDate}}</view></view></view><view class="exercise-line small" wx:for="{{trendPoints}}" wx:key="workoutId" bindtap="open" data-id="{{item.workoutId}}">{{item.shortDate}} · {{item.detail}} →</view><view class="muted small">{{trendPoints.length ? '持平也正常；数据供回顾，不生成训练质量评分。' : '记录有效完成组后，逐次查看变化。'}}</view></view>
+    <view wx:for="{{groups}}" wx:key="month" wx:for-item="group">
+      <view class="month">{{group.month}}</view>
+      <view class="panel" wx:for="{{group.records}}" wx:key="id" bindtap="open" data-id="{{item.id}}">
+        <view class="between"><view class="panel-title">{{item.name}}</view><text class="small muted">{{item.date}}</text></view>
+        <view class="small">{{item.completion.source}} · {{item.completion.label}}</view>
+        <view class="muted small">{{item.duration}} · {{item.sets}} 组{{item.muscles ? ' · ' + item.muscles : ''}}</view>
+        <view class="record-preview" wx:for="{{item.highlights}}" wx:for-item="highlight" wx:key="id">{{highlight.text}}</view>
+        <view class="note" wx:if="{{item.note || item.feeling}}">{{item.feeling}}{{item.feeling && item.note ? ' · ' : ''}}{{item.note}}</view>
+        <view class="record-preview" wx:if="{{!item.highlights.length}}">{{item.source === 'checkin' ? '已打卡，可打开补充动作细节' : '未填写逐组数据，可打开补录'}}</view>
+        <view class="small" style="color: #18784e; margin-top: 18rpx;">查看详情 / 修改 →</view>
+      </view>
+    </view>
+    <view class="panel empty" wx:if="{{!count}}"><view class="panel-title">{{search ? '没有找到对应记录' : '还没有训练记录'}}</view><view class="muted">{{search ? '试试其他关键词。' : '完成一次训练后，在这里查看组数、动作和变化。'}}</view></view>
+  </block>
+</view>

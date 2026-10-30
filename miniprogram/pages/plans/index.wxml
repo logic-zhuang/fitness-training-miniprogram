@@ -1,0 +1,17 @@
+<import src="../../templates/status.wxml" />
+<view class="page">
+  <template is="save-status" data="{{status, phase, error}}" />
+  <view class="eyebrow">每周计划</view>
+  <view class="heading">{{plan.name || '我的计划'}}</view>
+  <block wx:if="{{ready}}">
+    <view class="between"><view class="muted">每周 {{plan.days.length}} 个安排</view><button class="text-button" bindtap="edit">编辑计划</button></view>
+    <view class="auth-note" wx:if="{{legacy}}">旧计划内容已保留，请编辑并确认各安排的星期后开始新训练。</view>
+    <view class="auth-note">初始安排可以编辑。请根据自己的情况调整动作和训练量。</view>
+    <view class="panel" style="margin-top: 24rpx;" wx:for="{{days}}" wx:key="weekday">
+      <view class="between"><text class="tag">{{item.label}}</text><text class="muted small">{{item.state}}</text></view><view class="panel-title">{{item.day ? item.day.name : '休息'}}</view>
+      <view class="exercise-line between" wx:for="{{item.day.exercises}}" wx:for-item="exercise" wx:key="id"><text>{{exercise.name}}</text><text class="muted small">{{exercise.muscle}} · {{exercise.sets.length}} 组{{exercise.recordType === 'duration' && exercise.targetSeconds ? ' · 每组 '+exercise.targetSeconds+'秒' : ''}}</text></view>
+      <button wx:if="{{item.day}}" class="action secondary" bindtap="start" data-id="{{item.day.id}}">{{legacy ? '先确认星期' : '开始这份安排'}}</button>
+    </view>
+    <button class="action" bindtap="edit">调整我的计划</button>
+  </block>
+</view>

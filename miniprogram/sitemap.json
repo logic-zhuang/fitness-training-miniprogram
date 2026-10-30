@@ -1,0 +1,4 @@
+{
+  "desc": "开发预览阶段不开放搜索收录",
+  "rules": [{ "action": "disallow", "page": "*" }]
+}

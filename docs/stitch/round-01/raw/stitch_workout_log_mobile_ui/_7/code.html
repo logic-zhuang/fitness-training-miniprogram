@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-error-container": "#93000a", "surface-variant": "#d6e7da", "on-tertiary-container": "#ffe6d5", "tertiary": "#7d4200", "tertiary-fixed": "#ffdcc3", "primary-fixed-dim": "#80d8a6", "on-surface": "#111e17", "surface-dim": "#cdded2", "tertiary-container": "#a15600", "on-secondary-container": "#5c6761", "surface-container": "#e1f2e5", "on-primary-fixed-variant": "#005232", "on-primary-container": "#a3fdc8", "surface-container-lowest": "#ffffff", "inverse-primary": "#80d8a6", "on-surface-variant": "#3f4942", "surface-tint": "#006d44", "background": "#edfef0", "surface-bright": "#edfef0", "inverse-surface": "#25342b", "on-tertiary-fixed": "#2f1500", "primary-fixed": "#9cf5c1", "surface-container-high": "#dcecdf", "on-primary": "#ffffff", "on-secondary": "#ffffff", "on-tertiary": "#ffffff", "tertiary-fixed-dim": "#ffb77d", "inverse-on-surface": "#e4f5e8", "secondary-fixed-dim": "#bec9c3", "outline-variant": "#bec9bf", "on-secondary-fixed-variant": "#3f4944", "secondary-container": "#dae5de", "primary-container": "#18784e", "surface": "#edfef0", "on-tertiary-fixed-variant": "#6e3900", "on-primary-fixed": "#002111", "surface-container-highest": "#d6e7da", "secondary": "#56615b", "surface-container-low": "#e7f8eb", "on-secondary-fixed": "#141e1a", "error": "#ba1a1a", "outline": "#6f7a71", "secondary-fixed": "#dae5de", "on-background": "#111e17", "on-error": "#ffffff", "error-container": "#ffdad6", "primary": "#005e3a" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter": "0.75rem", "margin": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.25rem", "space-lg": "1rem", "space-md": "0.75rem" }, fontFamily: { "headline-lg": ["Space Grotesk"], "data-unit": ["Plus Jakarta Sans"], "headline-sm": ["Space Grotesk"], "label-sm": ["Plus Jakarta Sans"], "data-display-md": ["Space Grotesk"], "body-lg": ["Plus Jakarta Sans"], "data-display-lg": ["Space Grotesk"], "title-md": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"] }, fontSize: { "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "data-unit": ["13px", { "lineHeight": "16px", "fontWeight": "500" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "data-display-md": ["20px", { "lineHeight": "24px", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "500" }], "data-display-lg": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-md": ["18px", { "lineHeight": "24px", "fontWeight": "600" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "label-md": ["14px", { "lineHeight": "20px", "fontWeight": "500" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-margin flex items-center justify-between"><button aria-label="返回" class="w-11 h-11 -ml-2 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><h1 class="font-title-md text-title-md text-on-surface tracking-tight text-center truncate flex-1 px-space-sm">Exercise Selection</h1><div class="w-11 h-11 -mr-2 flex items-center justify-end"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-safe bg-surface"><div class="flex flex-col w-full pb-24">
+<!-- 搜索与筛选区 Sticky Header Container -->
+<div class="sticky top-0 z-30 bg-surface/95 backdrop-blur-md px-margin pt-space-sm pb-space-md shadow-sm">
+<!-- 搜索输入框 -->
+<div class="relative flex items-center w-full h-11 bg-surface-container-low rounded-xl px-space-md">
+<span class="material-symbols-outlined text-outline text-[20px] mr-2">search</span>
+<input class="w-full bg-transparent text-on-surface placeholder:text-outline text-label-md font-label-md focus:outline-none" id="exercise-search" placeholder="搜索动作名称、器械、英文 (如: 划船 / Row)" type="search"/>
+<button aria-label="按首字母或热度排序" class="w-7 h-7 flex items-center justify-center rounded-lg bg-surface-container text-on-surface-variant hover:text-primary transition-colors ml-1" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+</button>
+</div>
+<!-- 一级部位滑动筛选 Chips -->
+<div class="flex items-center gap-2 overflow-x-auto py-space-sm no-scrollbar -mx-margin px-margin">
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">全部</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-primary-container text-on-primary font-semibold flex items-center gap-1">
+        背部
+        <span class="w-1.5 h-1.5 rounded-full bg-on-primary-container"></span>
+</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">胸部</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">腿部</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">肩部</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">手臂</button>
+<button class="shrink-0 px-3 py-1.5 rounded-lg text-label-sm font-label-sm bg-surface-container-lowest text-on-surface-variant">核心</button>
+</div>
+<!-- 二级器械筛选 Chips -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar -mx-margin px-margin">
+<button class="shrink-0 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-highest text-on-surface font-medium">全部器械</button>
+<button class="shrink-0 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low text-secondary">杠铃</button>
+<button class="shrink-0 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low text-secondary">哑铃</button>
+<button class="shrink-0 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low text-secondary">绳索/固定器械</button>
+<button class="shrink-0 px-2.5 py-1 rounded-full text-label-sm font-label-sm bg-surface-container-low text-secondary">自重</button>
+</div>
+</div>
+<div class="px-margin flex flex-col gap-space-sm mt-space-sm">
+<!-- 选定指示横幅 -->
+<div class="flex items-center justify-between px-space-md py-2.5 bg-surface-container-low rounded-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-[18px]">checklist_rtl</span>
+<span class="text-label-sm font-label-sm text-on-surface">已选择 <strong class="text-primary-container font-semibold" id="selected-badge-count">2</strong> 个动作，点击卡片可多选或替换</span>
+</div>
+<span class="text-label-sm font-label-sm text-secondary">背部动作 (18)</span>
+</div>
+<!-- 动作卡片列表 -->
+<div class="flex flex-col gap-2.5" id="exercise-list">
+<!-- 动作 1 (已选状态) -->
+<div class="exercise-item cursor-pointer flex items-center justify-between p-space-md rounded-xl bg-surface-container transition-all active:scale-[0.99] select-none" data-id="1" data-selected="true">
+<div class="flex items-center gap-space-md min-w-0 flex-1 pr-2">
+<!-- 动作示意缩略图 (轻量占位) -->
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-90" data-alt="Minimalist monochromatic anatomical illustration of a person performing a lat pulldown exercise on a cable machine, clean line work, calm clinical athletic style, muted soft greens and light charcoal grey tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxLO358caQVFVjGs5dLQ0d_5JLdHyBAygjj6w8LszhwxvIYAY07V2Ce4EgtagzaBQsSPbPqbNSllYuVTTh3HXUOrUzVTfLuFshnZmOUPqeCKfr5TE226FvWHbXH2Gn1gQ83XrJxJ1ZNnab86Nw2Y8igERt9SAFfvdvTGlowcwpD7YmOJs9Ks-_eT4Zbz-JG2LYI6iJNivONOrcLqklPOb1kspT889JVTHXsHiVpOz4yBPNVlfXdEg"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h3 class="text-body-lg font-body-lg text-primary-container font-semibold truncate">高位下拉</h3>
+<span class="text-label-sm font-label-sm text-secondary truncate">Lat Pulldown</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>绳索器械</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="truncate">主练背阔肌</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-label-sm font-label-sm text-primary-container">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>历史最佳: 40kg × 10次</span>
+</div>
+</div>
+</div>
+<button aria-label="选择高位下拉" class="check-target w-11 h-11 shrink-0 flex items-center justify-center" type="button">
+<div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-on-primary transition-transform">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+</div>
+<!-- 动作 2 (已选状态) -->
+<div class="exercise-item cursor-pointer flex items-center justify-between p-space-md rounded-xl bg-surface-container transition-all active:scale-[0.99] select-none" data-id="2" data-selected="true">
+<div class="flex items-center gap-space-md min-w-0 flex-1 pr-2">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-lowest shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-90" data-alt="Technical illustration of seated cable row exercise, athletic figure with emphasis on back thickness and trapezius muscles, calm sage green studio aesthetic, modern vector biomechanics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcupavf9gkZOjrUQ6_Z19i4sLJF0GCVbgEDSW9G0FsmZrzjqJm1mvPyqu1Z3_CG7LlewhQFpGRtnt-44mWzdZ77KriKvV03KXGY7COT82whYVfv-VvbkQyi17NfMdBjx0Td2uHcWG0fkZ735iEObkZy_MIPHtgJEdWQ_zNCHo7F33Vf4ocHeOsHwTNJqFeHWCueakbibo1h9VlD2hp9V5sRUpFvVwZcIqEoIIhChFVu3GgL6SEihQ"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h3 class="text-body-lg font-body-lg text-primary-container font-semibold truncate">坐姿划船</h3>
+<span class="text-label-sm font-label-sm text-secondary truncate">Seated Cable Row</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>绳索器械</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="truncate">背厚度与中下斜方</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-label-sm font-label-sm text-primary-container">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>历史最佳: 45kg × 12次</span>
+</div>
+</div>
+</div>
+<button aria-label="选择坐姿划船" class="check-target w-11 h-11 shrink-0 flex items-center justify-center" type="button">
+<div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-on-primary transition-transform">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+</button>
+</div>
+<!-- 动作 3 (未选状态) -->
+<div class="exercise-item cursor-pointer flex items-center justify-between p-space-md rounded-xl bg-surface-container-lowest shadow-sm transition-all active:scale-[0.99] select-none" data-id="3" data-selected="false">
+<div class="flex items-center gap-space-md min-w-0 flex-1 pr-2">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-low shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-90" data-alt="Clean minimal line art diagram of bodyweight pull-up movement on a bar, biomechanical focus on lats, soft mint green and graphite lines on warm white paper texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtRh7fy90c-mve-9fg0AHf9ZsEKE1RpBqNbSYLPdXBmNcGMmprzNPszq---2wH95Wfcp56K5avccAi-0tv7G7g85QwmkOLu0FXR-GcwPNgQoXtS3dAqjaWwWxkWAkIQIkCOS2_vv_NB-gSxRDug3Wj8aWf3F8WH6LIxwnUMPz4F3JKWALecCEa74qXdIZOp3YtoL-PN8Gb4AAdx9k1CQ-JQrUYowOawDuMOBMcnrpuKeO1_QR_0PY"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h3 class="text-body-lg font-body-lg text-on-surface font-medium truncate">引体向上</h3>
+<span class="text-label-sm font-label-sm text-secondary truncate">Pull-up</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>自重 / 加重</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="truncate">基础复合动作</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">straighten</span>
+<span>无器械门槛 · 黄金动作</span>
+</div>
+</div>
+</div>
+<button aria-label="选择引体向上" class="check-target w-11 h-11 shrink-0 flex items-center justify-center" type="button">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center transition-transform">
+<!-- 未选空心态 -->
+</div>
+</button>
+</div>
+<!-- 动作 4 (未选状态) -->
+<div class="exercise-item cursor-pointer flex items-center justify-between p-space-md rounded-xl bg-surface-container-lowest shadow-sm transition-all active:scale-[0.99] select-none" data-id="4" data-selected="false">
+<div class="flex items-center gap-space-md min-w-0 flex-1 pr-2">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-low shrink-0 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover opacity-90" data-alt="Diagram of bent-over barbell row exercise posture, precise spinal neutrality and hip hinge graphic, subdued sage green accents on clean white background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg2jQDd4p3Z9XedIi_62VLA43EhZwfTfIXZt3Zab8rjEkKJRk0zB21WbEyuT1DLlXiE5G2bilgYgoz8rqErhe9ujcx2RhaGXqtqfK6yfh4Y_BePXOoMutIDPaNLK6_T9VFllQ9zubBPjV-sR2ZMWjmQPRrSbqm1TvEOptXmRuTe652w7OGuD5iUQ6xfyFFI6ZGTwUUDL0Wp0Mu6lMBPl8_5yjoggZMq90aXrdtdbIygnsKD63VRDk"/>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h3 class="text-body-lg font-body-lg text-on-surface font-medium truncate">俯身杠铃划船</h3>
+<span class="text-label-sm font-label-sm text-secondary truncate">Barbell Row</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>杠铃</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="truncate">核心后链复合</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>上次训练: 60kg × 8次</span>
+</div>
+</div>
+</div>
+<button aria-label="选择俯身杠铃划船" class="check-target w-11 h-11 shrink-0 flex items-center justify-center" type="button">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center transition-transform">
+</div>
+</button>
+</div>
+<!-- 动作 5 (自定义私人动作标签) -->
+<div class="exercise-item cursor-pointer flex items-center justify-between p-space-md rounded-xl bg-surface-container-lowest shadow-sm transition-all active:scale-[0.99] select-none" data-id="5" data-selected="false">
+<div class="flex items-center gap-space-md min-w-0 flex-1 pr-2">
+<div class="relative w-14 h-14 rounded-lg bg-surface-container-high shrink-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary-container text-[24px]">fitness_center</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2 flex-wrap">
+<h3 class="text-body-lg font-body-lg text-on-surface font-medium truncate">单臂高位绳索拉背</h3>
+<span class="px-1.5 py-0.5 rounded text-label-sm font-label-sm bg-surface-variant text-on-surface-variant font-medium">私人动作</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5 text-label-sm font-label-sm text-on-surface-variant">
+<span>龙门架 / 绳索</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span class="truncate">单侧孤立感知</span>
+</div>
+<div class="flex items-center gap-1 mt-1 text-label-sm font-label-sm text-secondary">
+<span class="material-symbols-outlined text-[14px]">edit_note</span>
+<span>附带备注: 顶峰收缩保持1秒</span>
+</div>
+</div>
+</div>
+<button aria-label="选择单臂高位绳索拉背" class="check-target w-11 h-11 shrink-0 flex items-center justify-center" type="button">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center transition-transform">
+</div>
+</button>
+</div>
+</div>
+<!-- 列表末尾贴心入口 -->
+<div class="mt-space-md mb-space-lg flex flex-col items-center justify-center p-space-lg rounded-xl bg-surface-container-low text-center">
+<p class="text-label-md font-label-md text-on-surface-variant">没有找到想要的动作？</p>
+<button class="mt-space-sm h-11 px-5 rounded-lg bg-surface-container-lowest text-primary-container text-body-md font-body-lg font-semibold shadow-sm flex items-center gap-1.5 active:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>创建自定义动作</span>
+</button>
+</div>
+</div>
+<!-- 底部固定确认栏 (Fixed Action Tray) -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-surface-container-lowest shadow-[0_-4px_20px_rgba(23,37,29,0.06)] px-margin py-3 pb-safe flex items-center justify-between gap-4">
+<div class="flex items-center gap-2 shrink-0">
+<div class="flex flex-col">
+<div class="flex items-baseline gap-1">
+<span class="text-label-sm font-label-sm text-secondary">已选</span>
+<span class="text-headline-sm font-headline-sm text-primary-container" id="bottom-selected-count">2</span>
+<span class="text-label-sm font-label-sm text-secondary">项动作</span>
+</div>
+<button class="text-label-sm font-label-sm text-secondary hover:text-error text-left underline transition-colors" id="clear-all-btn" type="button">
+          清空已选
+        </button>
+</div>
+</div>
+<button class="flex-1 h-12 rounded-xl bg-primary-container active:bg-on-primary-fixed-variant text-on-primary text-body-lg font-body-lg font-semibold flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.98]" id="confirm-btn" type="button">
+<span class="material-symbols-outlined text-[20px]">library_add_check</span>
+<span id="confirm-btn-text">确认添加所选动作 (2)</span>
+</button>
+</div>
+</div>
+<script>
+  (function() {
+    const list = document.getElementById('exercise-list');
+    const badgeCount = document.getElementById('selected-badge-count');
+    const bottomCount = document.getElementById('bottom-selected-count');
+    const confirmBtnText = document.getElementById('confirm-btn-text');
+    const clearAllBtn = document.getElementById('clear-all-btn');
+
+    function updateState() {
+      const items = list.querySelectorAll('.exercise-item');
+      let count = 0;
+
+      items.forEach(item => {
+        const isSelected = item.dataset.selected === 'true';
+        const titleEl = item.querySelector('h3');
+        const checkTarget = item.querySelector('.check-target div');
+
+        if (isSelected) {
+          count++;
+          item.classList.remove('bg-surface-container-lowest', 'shadow-sm');
+          item.classList.add('bg-surface-container');
+          titleEl.classList.remove('text-on-surface');
+          titleEl.classList.add('text-primary-container');
+          
+          checkTarget.className = "w-7 h-7 rounded-full bg-primary-container flex items-center justify-center text-on-primary transition-transform";
+          checkTarget.innerHTML = '<span class="material-symbols-outlined text-[18px]">check</span>';
+        } else {
+          item.classList.remove('bg-surface-container');
+          item.classList.add('bg-surface-container-lowest', 'shadow-sm');
+          titleEl.classList.remove('text-primary-container');
+          titleEl.classList.add('text-on-surface');
+          
+          checkTarget.className = "w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center transition-transform";
+          checkTarget.innerHTML = '';
+        }
+      });
+
+      badgeCount.textContent = count;
+      bottomCount.textContent = count;
+      confirmBtnText.textContent = count > 0 ? `确认添加所选动作 (${count})` : '请选择动作';
+    }
+
+    // 点击卡片切换选中
+    list.addEventListener('click', (e) => {
+      const card = e.target.closest('.exercise-item');
+      if (!card) return;
+      const current = card.dataset.selected === 'true';
+      card.dataset.selected = (!current).toString();
+      updateState();
+    });
+
+    // 清空操作
+    clearAllBtn.addEventListener('click', () => {
+      list.querySelectorAll('.exercise-item').forEach(item => {
+        item.dataset.selected = 'false';
+      });
+      updateState();
+    });
+  })();
+</script></main></body></html>

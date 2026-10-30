@@ -1,0 +1,28 @@
+<view class="picker-layer" wx:if="{{open}}">
+  <view class="picker-mask" bindtap="close" catchtouchmove="noop"></view>
+  <view class="picker-sheet {{keyboardHeight ? 'typing' : ''}}" style="{{keyboardHeight ? 'padding-bottom:' + keyboardHeight + 'px;' : ''}}">
+    <view class="picker-head" catchtouchmove="noop">
+      <view class="picker-title-row"><text class="panel-title picker-title">{{managing ? '我的动作库' : single ? '替换动作' : '选择动作'}}</text><button class="picker-close" bindtap="close">关闭</button></view>
+      <view class="picker-tabs"><button class="picker-tab {{tab === 'mine' ? 'selected' : ''}}" bindtap="tab" data-tab="mine">我的动作</button><button class="picker-tab {{tab === 'builtin' ? 'selected' : ''}}" bindtap="tab" data-tab="builtin">内置动作</button><button class="picker-tab {{tab === 'recent' ? 'selected' : ''}}" bindtap="tab" data-tab="recent">最近使用</button></view>
+      <view class="picker-search"><input adjust-position="{{false}}" bindfocus="focusField" bindblur="blurField" bindkeyboardheightchange="keyboard" class="field grow" value="{{query}}" placeholder="搜索动作名称" bindinput="query" /><picker range="{{muscles}}" bindchange="muscle"><view class="tag">{{muscle}} ▾</view></picker></view>
+    </view>
+    <scroll-view scroll-y="true" class="picker-scroll" scroll-into-view="{{scrollTarget}}" scroll-with-animation="true">
+      <view class="picker-row {{item.picked ? 'picked' : ''}}" wx:for="{{rows}}" wx:key="id" data-id="{{item.id}}" bindtap="pick">
+        <view class="grow"><view class="day-title">{{item.picked ? '✓ ' : ''}}{{item.name}}</view><view class="muted small">{{item.muscle}} · {{item.typeLabel}}{{item.equipment ? ' · ' + item.equipment : ''}}</view></view>
+        <button class="picker-more" catchtap="menu" data-id="{{item.id}}">更多</button>
+      </view>
+      <view class="muted picker-empty" wx:if="{{!rows.length}}">{{tab === 'mine' ? '收藏内置动作，或创建自己的动作。' : '暂无匹配动作，可搜索或创建。'}}</view>
+      <button class="picker-create-toggle" bindtap="create">{{creating ? '收起创建' : '＋ 创建自己的动作'}}</button>
+      <view wx:if="{{creating}}" class="picker-create">
+        <input id="create-name" adjust-position="{{false}}" bindfocus="focusField" bindblur="blurField" bindkeyboardheightchange="keyboard" class="field" maxlength="80" value="{{name}}" placeholder="动作名称" bindinput="field" data-field="name" />
+        <view class="between"><picker range="{{customMuscles}}" bindchange="customMuscle"><view class="tag">部位：{{customMuscle}} ▾</view></picker><picker range="{{types}}" bindchange="customType"><view class="tag">{{customType === 'duration' ? '时长 · 秒' : '重量 / 次数'}} ▾</view></picker></view>
+        <input id="create-equipment" adjust-position="{{false}}" bindfocus="focusField" bindblur="blurField" bindkeyboardheightchange="keyboard" class="field" maxlength="80" value="{{equipment}}" placeholder="器械（可选）" bindinput="field" data-field="equipment" />
+        <input id="create-note" adjust-position="{{false}}" bindfocus="focusField" bindblur="blurField" bindkeyboardheightchange="keyboard" class="field" maxlength="5000" value="{{note}}" placeholder="动作提示（可选）" bindinput="field" data-field="note" />
+        <view class="muted small" wx:if="{{editingId}}">修改个人库只影响以后添加的动作，既有计划和历史保留快照。</view><button class="picker-save" bindtap="saveCustom">{{managing ? '保存到我的动作' : editingId ? '保存修改并选中' : '保存并选中'}}</button>
+      </view>
+    </scroll-view>
+    <view class="picker-foot" catchtouchmove="noop">
+      <button wx:if="{{managing}}" class="picker-confirm" bindtap="close">完成</button><button wx:else class="picker-confirm" disabled="{{!selectedIds.length}}" bindtap="confirm">{{single ? '确认替换' : '添加所选动作（' + selectedIds.length + '）'}}</button>
+    </view>
+  </view>
+</view>

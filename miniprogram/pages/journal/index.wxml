@@ -1,0 +1,63 @@
+<import src="../../templates/status.wxml"/>
+<view class="page journal-page">
+  <template is="save-status" data="{{status,phase,error}}"/>
+  <button wx:if="{{detail}}" class="text-button" bindtap="allDates">‹ 全部训练日志</button>
+  <view class="eyebrow">{{detail ? date : '每一次积累，都留在这里'}}</view>
+  <view class="between"><view class="heading">{{detail ? '日期详情' : '训练日志'}}</view><button class="text-button" bindtap="toggleComposer">{{composer ? '收起添加' : '＋ 添加照片'}}</button></view>
+  <view class="journal-filters" wx:if="{{!detail}}">
+    <button wx:for="{{photoFilters}}" wx:key="value" class="filter {{photoFilter === item.value ? 'active' : ''}}" data-value="{{item.value}}" bindtap="filter">{{item.label}} {{item.count}}</button>
+  </view>
+  <view class="panel" wx:if="{{composer}}">
+    <view class="panel-title">留下今天的样子</view>
+    <picker mode="date" value="{{date}}" end="{{today}}" data-field="date" bindchange="field"><view class="field">照片日期：{{date}} ▾</view></picker>
+    <input class="field" value="{{tags}}" data-field="tags" bindinput="field" maxlength="160" placeholder="部位说明（可选，例如胸、三头）"/>
+    <button class="action" bindtap="add" loading="{{uploading}}" disabled="{{uploading}}">相册 / 拍照</button>
+    <view class="muted small">{{account ? '照片仅自己可见，上传失败可稍后重试' : '照片先保存在此设备，登录后可确认导入'}}</view>
+  </view>
+  <view class="error" wx:if="{{photoError}}">{{photoError}}</view>
+  <view class="between" wx:if="{{account}}"><button class="text-button" bindtap="retryPhotos" loading="{{uploading}}" disabled="{{uploading}}">重试待上传照片</button><button wx:if="{{guestCount}}" class="text-button" bindtap="importPhotos" disabled="{{uploading}}">导入本机照片</button></view>
+  <block wx:if="{{photoFilter !== 'all' && photoFilter !== 'photos'}}">
+    <view class="compare-section" wx:for="{{compareGroups}}" wx:key="title">
+      <view class="section-title">{{item.title}}</view>
+      <scroll-view scroll-x class="compare-scroll"><view class="compare-row">
+        <view class="compare-card" wx:for="{{item.items}}" wx:for-item="photo" wx:key="id">
+          <image class="photo compare-photo" src="{{photo.path}}" mode="aspectFill" data-id="{{photo.id}}" bindtap="preview"/>
+          <view class="muted small">{{photo.date}}{{photo.note ? " · " + photo.note : ""}}</view>
+        </view>
+      </view></scroll-view>
+    </view>
+    <view class="panel empty" wx:if="{{!compareGroups.length}}"><view class="panel-title">还没有这类照片</view><view class="muted">训练完成时上传部位或整体照片，就会出现在这里。</view></view>
+  </block>
+  <view class="day" wx:for="{{groups}}" wx:key="date">
+    <view class="month" wx:if="{{!detail && (index === 0 || groups[index-1].month !== item.month)}}">{{item.month}}</view>
+    <view class="panel day-card">
+      <view class="day-header"><view class="panel-title">{{item.date}}</view><view class="tag">{{item.tags}}</view></view>
+      <view class="exercise-line" wx:for="{{item.records}}" wx:for-item="record" wx:key="id" data-id="{{record.id}}" bindtap="open">
+        <view class="between"><view class="record-name">{{record.name}}</view><text class="muted">›</text></view>
+        <view class="muted small">{{record.duration}} · {{record.sets}} 组 · {{record.label}}</view>
+      </view>
+      <view class="photos photos-{{item.photoCount === 1 ? 'one' : item.photoCount === 2 ? 'two' : 'three'}}">
+        <view class="photo-item" wx:for="{{item.photos}}" wx:for-item="photo" wx:key="id">
+          <image class="photo" src="{{photo.path}}" mode="aspectFill" data-id="{{photo.id}}" bindtap="preview"/>
+          <view class="between photo-caption"><text class="muted small">{{photo.label}}</text><button class="photo-more" data-id="{{photo.id}}" bindtap="photoMenu">···</button></view>
+          <view class="muted small" wx:if="{{detail && photo.note}}">{{photo.note}}</view>
+          <view class="error small" wx:if="{{detail && photo.error}}">{{photo.error}}</view>
+        </view>
+      </view>
+      <button wx:if="{{!detail}}" class="text-button date-link" data-date="{{item.date}}" bindtap="openDate">查看日期详情{{item.photoCount > item.photos.length ? ' · 共 ' + item.photoCount + ' 张照片' : ''}} ›</button>
+    </view>
+  </view>
+  <view class="panel empty" wx:if="{{!groups.length && !loading && (photoFilter === 'all' || photoFilter === 'photos')}}"><view class="panel-title">{{onlyPhotos ? '还没有照片' : '这里准备好记录你的训练了'}}</view><view class="muted">{{detail ? '可以补传当天照片，训练记录保存后也会出现在这里' : '从一次训练或一张照片开始，按日期慢慢积累'}}</view></view>
+  <view class="muted" wx:if="{{loading}}">正在读取照片…</view>
+  <button wx:if="{{hasMore}}" class="action secondary" bindtap="more" loading="{{loading}}">加载更多照片</button>
+</view>
+<view class="photo-edit-mask" wx:if="{{editingPhoto}}"><view class="panel photo-edit-panel">
+  <view class="panel-title">照片日期与说明</view>
+  <picker mode="date" end="{{today}}" value="{{editingPhoto.date}}" data-field="date" bindchange="photoField"><view class="field">{{editingPhoto.date}} ▾</view></picker>
+  <view class="journal-filters"><button class="filter {{editingPhoto.photoKind === 'workout' ? 'active' : ''}}" data-field="photoKind" data-value="workout" bindtap="photoField">部位照片</button><button class="filter {{editingPhoto.photoKind === 'body' ? 'active' : ''}}" data-field="photoKind" data-value="body" bindtap="photoField">整体照片</button></view>
+  <block wx:if="{{editingPhoto.photoKind === 'body'}}"><view class="journal-filters"><button wx:for="{{['正面','侧面','背面']}}" wx:key="*this" class="filter {{editingPhoto.photoAngle === item ? 'active' : ''}}" data-field="photoAngle" data-value="{{item}}" bindtap="photoField">{{item}}</button></view></block>
+  <input class="field" value="{{editingPhoto.tags}}" data-field="tags" bindinput="photoField" maxlength="160" placeholder="部位说明（可选）"/>
+  <textarea class="goal" value="{{editingPhoto.note}}" data-field="note" bindinput="photoField" maxlength="1000" cursor-spacing="120" placeholder="照片备注（可选）"/>
+  <button class="action" bindtap="savePhotoDetails" loading="{{uploading}}" disabled="{{uploading}}">保存说明</button><button class="text-button" bindtap="closePhotoEditor" disabled="{{uploading}}">取消</button>
+</view></view>
+

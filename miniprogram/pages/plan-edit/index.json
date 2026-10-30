@@ -1,0 +1,1 @@
+{ "navigationBarTitleText": "编辑训练计划", "usingComponents": { "exercise-picker": "../../components/exercise-picker/index" } }

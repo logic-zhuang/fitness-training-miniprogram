@@ -1,0 +1,30 @@
+<view class="body-panel">
+  <view class="title">今天记录了哪些部位</view>
+  <view class="map-wrap">
+    <view class="map-stage" bindtap="tapMap">
+      <image class="map-layer" src="{{image}}" mode="scaleToFill" wx:if="{{image}}"/>
+      <image class="map-layer" src="{{overlay}}" mode="scaleToFill" wx:if="{{overlay}}"/>
+    </view>
+    <view class="map-views"><text>正面</text><text>背面</text></view>
+  </view>
+  <view class="legend">
+    <view class="legend-item"><view class="swatch level-0"/>未记录</view>
+    <view class="legend-item" wx:for="{{levels}}" wx:key="level"><view class="swatch level-{{item.level}}"/>{{item.label}}</view>
+  </view>
+  <view class="detail" wx:if="{{selected}}">
+    <view class="detail-title">{{selectedName}}</view>
+    <view wx:for="{{details}}" wx:key="id">{{item.name}} · {{item.sets}} 组</view>
+    <view wx:if="{{!details.length}}">本次没有以此为主部位的已确认组</view>
+  </view>
+  <view class="categories" wx:if="{{categories}}">按主部位：{{categories}}</view>
+  <view class="row {{selected === item.id ? 'row-selected' : ''}}" wx:for="{{recorded}}" wx:key="id" data-id="{{item.id}}" bindtap="select">
+    <view class="row-name"><view class="swatch level-{{item.level}}"/><text>{{item.name}}</text></view>
+    <text class="row-sets">{{item.sets}} 组</text>
+  </view>
+  <view class="empty" wx:if="{{!recorded.length && !unknown.length}}">本次没有已确认组，图中不标注部位。</view>
+  <view class="unknown" wx:if="{{unknown.length}}">
+    <view class="detail-title">未在图上标注的部位</view>
+    <view wx:for="{{unknown}}" wx:key="id">{{item.muscle}} · {{item.name}} · {{item.sets}} 组</view>
+  </view>
+  <view class="caption">按动作主部位归类，每组计一次；一个动作对应多块主要肌肉时分别标出。点图中肌肉可查看动作，不表示肌肉激活或恢复程度。</view>
+</view>

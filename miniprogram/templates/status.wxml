@@ -1,0 +1,7 @@
+<template name="save-status">
+  <view class="save-status {{phase === 'error' || phase === 'conflict' ? 'warning' : ''}}">
+    <text>{{status}}</text>
+    <button wx:if="{{phase === 'error' || phase === 'pending'}}" class="text-button" bindtap="retrySync">重试</button>
+    <view wx:if="{{error}}" class="status-detail">{{error}}</view>
+  </view>
+</template>

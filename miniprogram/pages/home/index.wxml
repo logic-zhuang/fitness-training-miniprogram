@@ -1,0 +1,38 @@
+<import src="../../templates/status.wxml"/>
+<view class="page"><template is="save-status" data="{{status,phase,error}}"/><view class="eyebrow">{{date}} · 训练日常</view><view class="heading">今天，练一点。</view><block wx:if="{{ready}}">
+<view class="panel accent-panel"><view class="eyebrow">{{draft ? '继续上次训练' : restToday ? '今天已休息' : '沿用你的每周计划'}}</view><view class="heading">{{draft ? draft.name : restToday ? '休息一下，明天再练' : next ? next.name : '今天可以休息或自由训练'}}</view><view class="muted" wx:if="{{next && !restToday}}">{{next.exercises.length}} 个动作</view><button class="action" bindtap="start" data-id="{{next.id}}" wx:if="{{next && !draft && !restToday}}">开始今日训练</button><button class="action" bindtap="start" data-id="{{next.id}}" wx:if="{{!next && !draft && !restToday}}">开始自由训练</button><button class="action" bindtap="start" data-id="{{next.id}}" wx:if="{{draft}}">{{draft ? '继续训练' : '开始今日训练'}}</button><view class="actions"><button class="text-button" bindtap="adjustToday" wx:if="{{next && !draft && !restToday}}">调整今天的动作</button><button class="text-button" bindtap="toggleRest" wx:if="{{next && !draft}}">{{restToday ? '恢复今天训练' : '今天休息'}}</button><button class="text-button" bindtap="discardDraft" wx:if="{{draft}}">放弃草稿</button><button class="text-button" bindtap="moveWeek">调整本周日期</button></view></view>
+<view class="panel"><view class="between"><text>本周计划达标 {{completed}} / {{plan.days.length}}</text><text class="muted">实际 {{sessions}} 次</text></view><view class="progress"><view class="progress-fill" style="width:{{progress}}%;"/></view></view>
+<view class="between"><view class="section-title">七天安排</view><button class="text-button" bindtap="openPlan">每周计划</button></view><view class="muted" wx:if="{{legacy}}">旧计划需确认训练星期；仍可自由训练。</view>
+<view class="panel" wx:if="{{weekAdjusted}}"><view class="between"><text class="tag">本周已调整</text><button class="text-button" bindtap="restoreWeek">恢复默认安排</button></view><view class="muted small">仅本周生效，下周沿用每周计划。</view></view>
+<view class="panel" wx:for="{{days}}" wx:key="weekday"><view class="between"><view><text class="tag">{{item.label}}</text>{{item.day ? item.day.name : '休息'}}<text class="muted small" wx:if="{{item.adjusted}}"> · 已调整</text></view><text class="muted small" wx:if="{{item.rest}}">已休息</text><text class="muted small" wx:else>{{item.state}}</text></view><view class="record-preview" wx:if="{{item.day && !item.rest}}">{{item.summary}}</view><button class="text-button" wx:if="{{item.day && !item.rest}}" data-id="{{item.day.id}}" bindtap="start">练这份安排 →</button></view>
+<view class="panel" wx:if="{{lastRecord}}" bindtap="openJournal"><view class="panel-title">最近一次 · {{lastRecord.date}}</view><view>{{lastRecord.name}} → 查看日志与照片</view></view><view class="actions"><button class="text-button" bindtap="start">自由训练</button><button class="text-button" bindtap="openBackfill">补录 / 补练</button></view>
+</block></view>
+<view class="sheet-mask" wx:if="{{weekOpen}}" bindtap="closeWeek" catchtouchmove="keepSheet">
+  <view class="sheet-panel" catchtap="keepSheet">
+    <view class="between"><view class="panel-title">调整本周日期</view><button class="text-button" bindtap="closeWeek">关闭</button></view>
+    <scroll-view scroll-y class="sheet-body">
+      <view class="muted">只调整本周，下周沿用模板。已开始或保存的安排保留原日期。</view>
+      <view class="label sheet-label">原日期</view>
+      <picker range="{{weekTitles}}" value="{{weekFrom}}" data-field="weekFrom" bindchange="chooseWeekDate"><view class="field">{{weekTitles[weekFrom]}} ▾</view></picker>
+      <view class="label">交换到</view>
+      <picker range="{{weekTitles}}" value="{{weekTo}}" data-field="weekTo" bindchange="chooseWeekDate"><view class="field">{{weekTitles[weekTo]}} ▾</view></picker>
+      <view class="note" wx:if="{{weekFrom !== weekTo}}"><view class="label">确认后的安排</view><view class="week-change" wx:for="{{weekChanges}}" wx:key="date"><view>{{item.date}}</view><view class="muted small">{{item.before}} →</view><view>{{item.after}}</view></view></view>
+      <view class="error" wx:if="{{weekError}}">{{weekError}} 输入已保留。</view>
+    </scroll-view>
+    <button class="action" disabled="{{weekSaving || weekFrom === weekTo}}" loading="{{weekSaving}}" bindtap="applyWeek">确认交换本周安排</button>
+    <button class="text-button sheet-cancel" bindtap="closeWeek">取消</button>
+  </view>
+</view>
+<view class="sheet-mask" wx:if="{{backfillOpen}}" bindtap="closeBackfill" catchtouchmove="keepSheet">
+  <view class="sheet-panel" catchtap="keepSheet">
+    <view class="between"><view class="panel-title">补练本周未练安排</view><button class="text-button" bindtap="closeBackfill">关闭</button></view>
+    <scroll-view scroll-y class="sheet-body">
+      <view class="muted">选择一份未练的安排，按它的计划今天训练；完成后记在今天，原日期显示已补练。</view>
+      <view class="backfill-row" wx:for="{{backfillDays}}" wx:key="weekday" data-dayid="{{item.day.id}}" bindtap="chooseBackfill">
+        <view>{{item.pickerLabel}}</view><view class="muted small">{{item.day.exercises.length}} 个动作</view>
+      </view>
+    </scroll-view>
+    <button class="action" bindtap="backfillFree">自由补录（空白训练）</button>
+    <button class="text-button sheet-cancel" bindtap="closeBackfill">取消</button>
+  </view>
+</view>
